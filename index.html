@@ -458,6 +458,7 @@ body.b1.mtr #rk{background:#e2c23a;color:#1d1a0c;border-color:#6b5a12}
 <div id="toast" role="status" aria-live="polite"></div>
 <div id="mw" hidden><div id="mwp" class="mwp" role="dialog" aria-modal="true"></div></div>
 <script>
+// v31 초고퀄: 사건 현장 배경 12종(식당·회의실·야외훈련·정비고·보급창고·초소·강당·기자회견장·휴가 거리·의무대·사격장·상황실), 배경 인물, 표정·경례·반응 동작, 달력 카드, 현장 환경음
 // v30 이스터에그: 이름을 ‘김정빈’으로 하면 일병 진급 날 병크 사건 → 군사법원 무기징역 → 강제 전역, 판결문 ‘전설의 개폐급’(동기는 무조건 김동유)
 // v29 고증: 군복 — 3군 통합 디지털 무늬(공군 포함)·해병 무늬·해군 함상복, 간부 계급장은 옷깃·병은 가슴, 명찰 위치, 전 계급 팔각모, 훈련병 노란 명찰·계급장 없음, 상의 밖으로 내어 입기, 입영 날 사복, 지휘관 견장 폐지 반영
 // v28 개선: 고해상도 화면, 미니게임 18종 새 그림(브리핑·3초 카운트다운·입자 효과·평가표 도장), 군별 전투복 병사, 장면 배경, 효과음
@@ -3128,7 +3129,7 @@ const CLOUDS=(n,g)=>{const c=g?"#cfd5d8":"#f3f6f8",s=g?"#aeb6bb":"#d7e3ec";for(l
 const HR=()=>S&&S.ev&&S.hr>=0?S.hr:-1,NTT=h=>h>=0&&(h<5||h>=20),DSK=h=>h>=17&&h<20,DWN=h=>h>=5&&h<7;
 const SKY=(l,w,n)=>{const h=HR(),nt=l==4||NTT(h),tw=!nt&&(DSK(h)||DWN(h)),rn=!nt&&RAINY(),C=nt?["#06080f","#0a0f1c","#0f1728","#152036","#1a2840"]:rn?["#626d77","#6f7a84","#7d8891","#8b959d","#99a2a9"]:tw?(DSK(h)?["#3b3f6b","#6a5684","#a8678a","#dc8a72","#f2b37c"]:["#28304f","#46507a","#7e7393","#c2919a","#ecc0a0"]):w?["#8ea2b0","#9fb1bd","#b0c0c9","#c1ced5","#d1dce0"]:["#4f8fc8","#5f9cd0","#73aad8","#89b9df","#a2c9e7"];
  for(let i=0;i<5;i++)R(C[i],0,i*21,320,21);R(C[4],0,105,320,45);
- if(nt){for(let i=0;i<28;i++){if(((n/700|0)+i)%6==0)continue;R(i%5?"#cfd8f5":"#fff",(i*97+13)%320,(i*41+7)%74,1,1)}R("#efe9cf",262,12,11,11);R(C[1],266,11,9,9)}
+ if(nt){for(let i=0;i<28;i++){if(((n/700|0)+i)%6==0)continue;R(i%5?"#cfd8f5":"#fff",(i*97+13)%320,(i*41+7)%74,1,1)}x.fillStyle="rgba(255,248,220,.12)";x.beginPath();x.arc(267,17,11,0,6.2832);x.fill();x.fillStyle="#efe9cf";x.beginPath();x.arc(267,17,5.6,0,6.2832);x.fill();x.fillStyle=C[0];x.beginPath();x.arc(270,15,5,0,6.2832);x.fill()}
  else{if(!rn){if(tw){const sx=DSK(h)?44:262;R("#ffc77d",sx,76,15,15);R("#ffe0a8",sx+2,78,11,11)}else{R("#fff1bf",268,12,13,13);R("#ffe58c",270,14,9,9)}}if(OUTL.includes(l))CLOUDS(n,rn||w)}};
 const WEA=(l,n)=>{const m=mo(S.d),P=FX.pt,t=!OUTL.includes(l)?0:wn(S.d)?"s":l!=4&&RAINY()?"r":m==3?"p":(m==9||m==10)?"f":0;   // 눈·비·벚꽃·낙엽
  if(t!==FX.wt){FX.wt=t;P.length=0}if(!t||RM)return;
@@ -4251,6 +4252,17 @@ const SKN="#e3b48c",SKD="#c99670",
  CAPOCT=(a,b,p)=>{x.save();x.beginPath();x.moveTo(a-5.6,b-11.2);x.lineTo(a-6.8,b-17.2);x.lineTo(a+6.8,b-17.2);x.lineTo(a+5.6,b-11.2);x.closePath();x.clip();CAMO(a-7,b-18,14,7,p,8);
   R("rgba(0,0,0,.22)",a-3.4,b-17.2,.3,6.2);R("rgba(0,0,0,.22)",a+3.1,b-17.2,.3,6.2);R("rgba(255,255,255,.09)",a-6.8,b-17.2,13.6,.5);x.restore();
   CAMO(a-6,b-12,12,2,p,9);R("rgba(0,0,0,.3)",a-6.4,b-12,12.8,1.5);R("rgba(0,0,0,.18)",a-5,b-10.5,10,.8)},
+ // 입 모양: 0 보통 · 1 웃음(멘탈 75↑) · 2 시무룩(멘탈 35↓) · 3 지침(체력 30↓, 눈 밑 그늘·땀)
+ MOUTH=(a,b,md)=>{const c="#8f4a3c";if(md==1){R(c,a-1.5,b-3,4,.8);R(c,a-2.3,b-3.7,.9,.9);R(c,a+1.4,b-3.7,.9,.9)}
+  else if(md==2){R(c,a-1.5,b-3.3,4,.8);R(c,a-2.3,b-2.6,.9,.9);R(c,a+1.4,b-2.6,.9,.9);R("#3a2a20",a-3.6,b-7.6,1.8,.5);R("#3a2a20",a+1.8,b-7.6,1.8,.5)}
+  else if(md==3){R("rgba(90,50,60,.38)",a-3.4,b-4.1,1.9,.7);R("rgba(90,50,60,.38)",a+1.5,b-4.1,1.9,.7);RRF("#6a3a30",a-.8,b-3.4,1.8,1.4,.6);RRF("#bfe3ff",a+4.4,b-9.6,1.2,1.9,.6)}
+  else R("#b8826a",a-1,b-3,3,1)},
+ // 경례: 오른손 끝이 모자 챙(눈썹)에 닿고 팔꿈치는 옆으로
+ SALARM=(a,b,cam,c)=>{const P=PALS[cam]||PALS.rok,col=c||P[3][0];x.lineCap="round";x.lineJoin="round";
+  x.strokeStyle="rgba(0,0,0,.35)";x.lineWidth=3.6;x.beginPath();x.moveTo(a-8,b+1.5);x.lineTo(a-13.6,b-.6);x.lineTo(a-6.4,b-8.6);x.stroke();
+  x.strokeStyle=col;x.lineWidth=2.8;x.beginPath();x.moveTo(a-8,b+1.5);x.lineTo(a-13.6,b-.6);x.lineTo(a-6.4,b-8.6);x.stroke();
+  x.strokeStyle=c||P[1][0];x.lineWidth=1;x.beginPath();x.moveTo(a-11,b+.4);x.lineTo(a-12.6,b-.2);x.stroke();
+  x.fillStyle=SKN;x.save();x.translate(a-6.2,b-9.2);x.rotate(-.5);x.fillRect(-1.2,-.9,4.2,1.9);x.restore();x.lineCap="butt"},
  MANDRAW=(a,b,o)=>{const{g,c,br,cam,cap,tag,rk,civ,ms,cmd,tr}=o,suit=g>=5&&!civ,isG=typeof rk=="number",
    BG=cam=="nav"?"#283550":"#333c29",MC=br==3?"#2f6fd0":cam=="nav"?"#0a0e16":"#0c0e0a";
   // ── 다리·신발
@@ -4267,7 +4279,7 @@ const SKN="#e3b48c",SKD="#c99670",
   else if(suit){const sc=g==6?"#1c2a50":"#2b2c35";R(sc,a-8,b,16,17);R(sc,a-11,b+2,3,13);R(sc,a+8,b+2,3,13);R("#f2f2f2",a-2,b,4,10);R(g==6?"#c9362b":"#2f5a8a",a-1,b+1,2,9);R("rgba(0,0,0,.25)",a-1,b+2,1,14);
    if(g==6){R("#ffffff",a+4,b+4,2,2);R("#c9362b",a+4,b+4,2,1);R("#2a4c9a",a+4,b+5,2,1)}else{R("#e8c63a",a+4,b+4,2,2)}}
   else if(c){R(c,a-8,b,16,18);R(c,a-11,b+2,3,13);R(c,a+8,b+2,3,13)}
-  else{CAMO(a-8,b,16,18,cam,1);CAMO(a-11,b+2,3,13,cam,2);CAMO(a+8,b+2,3,13,cam,5);
+  else{CAMO(a-8,b,16,18,cam,1);if(!o.sal)CAMO(a-11,b+2,3,13,cam,2);CAMO(a+8,b+2,3,13,cam,5);
    R("rgba(0,0,0,.16)",a-8,b,16,1);R("rgba(0,0,0,.2)",a-8,b+1.6,.4,16);R("rgba(0,0,0,.2)",a+7.6,b+1.6,.4,16);   // 어깨·옆선
    R("rgba(0,0,0,.26)",a-8,b+17.4,16,.6);                                                                      // 상의 밑단(바지 밖으로)
    R("rgba(0,0,0,.18)",a-.3,b+2.6,.6,14.6);for(let i=0;i<4;i++)R("rgba(0,0,0,.34)",a-.4,b+4.4+i*3.4,.8,.6);     // 앞여밈·단추
@@ -4281,11 +4293,11 @@ const SKN="#e3b48c",SKD="#c99670",
    // 계급장 — 간부는 양쪽 옷깃, 병은 왼쪽(화면 오른쪽) 가슴 주머니
    if(isG){RANKROW(rk,a-4.1,b+1.45,MC,BG);RANKROW(rk,a+4.1,b+1.45,MC,BG)}
    else if(rk&&rk[0]=="e")BARS((+rk[1]|0)+1,a+2.2,br==1||br==2?b+3:b+7.6,3.8,2.9,BG,MC);
-   if(!tr){TGP(a-10.9,b+3.1);UPT(a+8.2,b+3.1,cam=="nav"?"#1d2638":"#2c3424",cam=="nav"?"#0e1320":"#151a10")}
+   if(!tr){if(!o.sal)TGP(a-10.9,b+3.1);UPT(a+8.2,b+3.1,cam=="nav"?"#1d2638":"#2c3424",cam=="nav"?"#0e1320":"#151a10")}
    if(cmd)CMDB(a+3.1,b+3.3)}
-  R(SKN,a-11,b+15,3,3);R(SKN,a+8,b+15,3,3);
+  if(!o.sal)R(SKN,a-11,b+15,3,3);R(SKN,a+8,b+15,3,3);
   // ── 머리·얼굴
-  R(SKN,a-2,b-2,4,3);R(SKN,a-5,b-11,10,10);R(SKD,a-5,b-2,10,1);R(SKN,a-6,b-8,1,3);R(SKN,a+5,b-8,1,3);R("#1a1a1a",a-3,b-6,1,2);R("#1a1a1a",a+2,b-6,1,2);R("#b8826a",a-1,b-3,3,1);
+  R(SKN,a-2,b-2,4,3);R(SKN,a-5,b-11,10,10);R(SKD,a-5,b-2,10,1);R(SKN,a-6,b-8,1,3);R(SKN,a+5,b-8,1,3);R("#1a1a1a",a-3,b-6,1,2);R("#1a1a1a",a+2,b-6,1,2);MOUTH(a,b,o.md|0);
   if(suit){const hc=g==6?"#8f8f98":"#222";R(hc,a-5,b-12,10,3);R(hc,a-6,b-11,1,4);R(hc,a+5,b-11,1,4);return}
   if(civ){R("rgba(38,30,24,.85)",a-5,b-11.6,10,2.2);R("rgba(38,30,24,.55)",a-5.4,b-10,1,2.4);R("rgba(38,30,24,.55)",a+4.4,b-10,1,2.4);return}   // 어제 민 머리
   R("#2a2018",a-5,b-11,10,2);if(ms)R("#2b1a10",a-3,b-3,6,1.5);
@@ -4293,15 +4305,18 @@ const SKN="#e3b48c",SKD="#c99670",
   if(cap=="oct"){CAPOCT(a,b,cam);if(isG)RANKROW(rk,a,b-14.4,"#0c0e0a");else EMB(a,b-14.7)}
   else if(cap=="ship"){CAPBC(a,b,null);R("#d6b24a",a-2.3,b-14.3,4.6,.6);R("#d6b24a",a-1.3,b-13.3,2.6,.5)}   // 함모: 함명 자수
   else if(cap=="bc"){CAPBC(a,b,cam);if(br==3){if(isG)RANKROW(rk,a,b-13.7,MC,BG);else if(rk&&rk[0]=="e")BARS((+rk[1]|0)+1,a-1.3,b-14.9,2.6,2,BG,MC)}else if(isG)RANKROW(rk,a,b-13.7,"#0c0e0a");else EMB(a,b-13.9)}
-  else{CAPPC(a,b,cam);if(isG)RANKROW(rk,a,b-13.8,"#0c0e0a");else EMB(a,b-14)}};
+  else{CAPPC(a,b,cam);if(isG)RANKROW(rk,a,b-13.8,"#0c0e0a");else EMB(a,b-14)}
+  if(o.sal)SALARM(a,b,cam,c)};
 // 누구를 그리는지: k 0 나 · 1 사건 속 인물(본문에서 직책을 읽는다) · 2 행보관(상사) · 3 상대(단계 g) · 4 위병
 const NKW=[["사단장",11],["여단장",10],["비행단장",10],["연대장",9],["전대장",9],["함장",8],["대대장",8],["중대장",6],["소대장",4],["당직사관",5],["주임원사",3],["행보관",2],["당직 부사관",1],["당직부사관",1],
   ["조교","e3"],["병장","e3"],["상병","e2"],["일병","e1"],["이병","e0"],["맞선임","s1"],["선임","s1"],["후임","s-1"],["동기","s0"]],
  CMDW=["사단장","여단장","비행단장","연대장","전대장","대대장","중대장"],NTX=new WeakMap(),
+ // 낱말 속 낱말은 건너뛴다: ‘연병장’의 ‘병장’은 계급이 아니다
+ NIDX=(t,kw)=>{let i=t.indexOf(kw);while(i>=0&&kw=="병장"&&t[i-1]=="연")i=t.indexOf(kw,i+1);return i},
  NPCR=e=>{const camp=CAMP(S);if(!e)return[camp?"t":"e2",0];if(e.nr)return e.nr(S);   // 사건이 인물 계급을 직접 정한 경우
  let t=NTX.get(e);if(t===undefined){t=typeof e.t=="string"?e.t:typeof e.t=="function"?String(e.t):"";NTX.set(e,t)}
   if(e.id=="dn")t=camp?"당직사관":"대대장";
-  let bi=1e9,r=null,w="";for(const[kw,v]of NKW){const i=t.indexOf(kw);if(i>=0&&i<bi){bi=i;r=v;w=kw}}
+  let bi=1e9,r=null,w="";for(const[kw,v]of NKW){const i=NIDX(t,kw);if(i>=0&&i<bi){bi=i;r=v;w=kw}}
   if(r===null)r=camp?"t":"e2";
   if(typeof r=="string"&&r[0]=="s")r=camp?"t":S.nco?"e2":"e"+CLP((S.lv|0)+(+r.slice(1)),0,3);
   return[r,CMDW.includes(w)?1:0]},
@@ -4316,8 +4331,9 @@ const NKW=[["사단장",11],["여단장",10],["비행단장",10],["연대장",9]
   else o.rk="e2";
   if(typeof o.rk=="number")o.g=o.rk<4?1:o.rk<7?2:o.rk<10?3:4;else if(k)o.g=0;
   o.tag=br==1?(o.tr&&!(S.seen&&S.seen.mjd)?"yel":"red"):o.cam=="nav"?"nav":br==3?"air":"std";
+  if(!k){o.md=S.hp<30?3:S.mt<35?2:S.mt>=75?1:0;o.sal=SALN&&!o.civ&&g<5?1:0}else{o.md=0;o.sal=0}
   return o};
-man=function(a,b,n,c,k,g){const o=MANO(c,k,g),cv=OFF("man2:"+[o.br,o.g,o.c,o.cam,o.cap,o.tag,o.rk,o.civ,o.ms,o.cmd,o.tr].join(","),30,54,()=>MANDRAW(15,19,o)),bob=(n/260|0)%2;
+man=function(a,b,n,c,k,g){const o=MANO(c,k,g),cv=OFF("man2:"+[o.br,o.g,o.c,o.cam,o.cap,o.tag,o.rk,o.civ,o.ms,o.cmd,o.tr,o.md,o.sal].join(","),30,54,()=>MANDRAW(15,19,o)),bob=(n/260|0)%2;
  x.fillStyle="rgba(0,0,0,.28)";x.beginPath();x.ellipse(a,b+33.6,8.5,2,0,0,6.2832);x.fill();BLIT(cv,a-15,b-19+bob,30,54);if(((n/120+a)%41)<=1.2){R(SKN,a-3,b-6+bob,1,2);R(SKN,a+2,b-6+bob,1,2)}};
 // 해병 훈련병은 상단 명찰도 노란색(빨간 명찰은 수료식에서 받는다)
 const MTRC=()=>{const b=document.body;if(!b||!S)return;const w=S.br==1&&!S.ttl&&!S.rl&&CAMP(S)&&!(S.seen&&S.seen.mjd);if(b.classList.contains("mtr")!==w)b.classList.toggle("mtr",w)};
@@ -4363,15 +4379,280 @@ const SCN=(l,br,td,sn)=>{
   x.fillStyle="#7d7f7a";x.fillRect(0,104,320,46);R("#a3a59e",0,104,320,8);for(let i=0;i<8;i++)R("#eee",i*44+6,130,22,2);R("#6b6f72",226,62,3,42);RRF("#2f6f4e",214,54,28,12,2);TT("버스",228,63,"#fff",7,{d:1});
   RRF("#2f7d4f",6,70,106,38,4);R("#256840",6,100,106,8);for(let i=0;i<5;i++)RRF("#bfe0ef",13+i*19,77,14,13,1.5);R("#e8c63a",100,96,10,4);RRF("#111",20,104,14,9,4);RRF("#111",82,104,14,9,4);TT("입영",44,98,"#fff",8,{d:1})}
  else{BGS.office(td)}};
-drawScene=function(n){MTRC();const l=sceneLoc(),td=TOD(),sn=wn(S.d)?1:0,br=S.br|0,out=l==1||l==3||l==7||l==9;
- if(out){SKY(l,sn,n)}BLIT(OFF("sc:"+l+":"+br+":"+td+":"+sn,320,150,()=>SCN(l,br,td,sn)),0,0,320,150);
- if(l==1&&br<2)FLAGP(206,30,58,n,td);if(l==4&&!RM){const a=Math.sin(n/1800)*.6;x.save();x.translate(270,74);x.rotate(-1.9+a);x.fillStyle=LG(0,0,150,0,[[0,"rgba(255,245,200,.33)"],[1,"rgba(255,245,200,0)"]]);x.beginPath();x.moveTo(0,0);x.lineTo(150,-16);x.lineTo(150,16);x.closePath();x.fill();x.restore()}
- if(l==0&&!RM&&td!="n"){x.fillStyle=`rgba(255,250,220,${.06+.02*Math.sin(n/700)})`;x.beginPath();x.moveTo(131,49);x.lineTo(189,49);x.lineTo(230,140);x.lineTo(92,140);x.fill()}
- if(l==3)man(286,72,n,0,4,0);
- const g=stage(),px=S.npc&&g<5?120:160;man(px,72,n,0,0,g);if(S.npc&&g<5)man(215,72,n,0,S.npc,0);if(l==6)for(let i=0;i<9;i++){R("#7a7f88",8+i*38,0,4,150);R("rgba(255,255,255,.2)",8+i*38,0,1,150)}
- {const h=HR();if(l!=4&&NTT(h)){x.fillStyle=out?"rgba(8,12,34,.5)":"rgba(12,14,36,.38)";x.fillRect(0,0,320,150);if(!out){x.fillStyle="rgba(255,226,150,.08)";x.fillRect(120,0,80,150)}}else if(DSK(h)||DWN(h)){x.fillStyle=DSK(h)?"rgba(150,70,40,.13)":"rgba(70,70,140,.13)";x.fillRect(0,0,320,150)}}
+drawScene=function(n){MTRC();MCARDCK();const sub=SUBNOW(),l=sceneLoc(),td=TOD(),sn=wn(S.d)?1:0,br=S.br|0;let out;
+ if(sub)out=SUBDRAW(sub,n);
+ else{out=l==1||l==3||l==7||l==9;if(out){SKY(l,sn,n)}BLIT(OFF("sc:"+l+":"+br+":"+td+":"+sn,320,150,()=>SCN(l,br,td,sn)),0,0,320,150);
+  if(l==1&&br<2)FLAGP(206,30,58,n,td);if(l==4&&!RM){const a=Math.sin(n/1800)*.6;x.save();x.translate(270,74);x.rotate(-1.9+a);x.fillStyle=LG(0,0,150,0,[[0,"rgba(255,245,200,.33)"],[1,"rgba(255,245,200,0)"]]);x.beginPath();x.moveTo(0,0);x.lineTo(150,-16);x.lineTo(150,16);x.closePath();x.fill();x.restore()}
+  if(l==0&&!RM&&td!="n"){x.fillStyle=`rgba(255,250,220,${.06+.02*Math.sin(n/700)})`;x.beginPath();x.moveTo(131,49);x.lineTo(189,49);x.lineTo(230,140);x.lineTo(92,140);x.fill()}
+  BACKLIFE(l,n);if(l==3)man(286,72,n,0,4,0)}
+ // 나: 선임 간부가 나타나면 경례, 선택 직후엔 기뻐 뛰거나 움찔한다 · 사건 인물: 옆에서 걸어 들어온다
+ const g=stage(),hasN=S.npc&&g<5,px=hasN?120:160,rt=n-RX.t,hop=rt<900&&RX.v>0&&!RM?-Math.abs(Math.sin(rt/900*Math.PI*2))*3.4:0,shk=rt<700&&RX.v<0&&!RM?Math.sin(rt/38)*1.3*(1-rt/700):0;
+ SALN=!!(S.ev&&hasN&&n-FX.ex<1600&&SALOK());man(px+shk,72+hop,n,0,0,g);SALN=0;
+ if(hasN){const t=n-FX.ex,wx=t<560&&!RM?(1-EO(t/560))*130:0;man(215+wx,72-(wx>1?Math.abs(Math.sin(t/75))*1.4:0),n,0,S.npc,0)}
+ if(rt<1100&&!RM)REACTFX(px,rt,n);
+ if(!sub&&l==6)for(let i=0;i<9;i++){R("#7a7f88",8+i*38,0,4,150);R("rgba(255,255,255,.2)",8+i*38,0,1,150)}
+ {const h=HR();if(l!=4&&NTT(h)&&!(sub=="post"||sub=="ctrl"||sub=="press"||sub=="aud")){x.fillStyle=out?"rgba(8,12,34,.5)":"rgba(12,14,36,.38)";x.fillRect(0,0,320,150);if(!out){if(sub){x.fillStyle=RGd(160,6,4,170,[[0,"rgba(255,230,170,.16)"],[1,"rgba(255,230,170,0)"]]);x.fillRect(0,0,320,150)}else{x.fillStyle="rgba(255,226,150,.08)";x.fillRect(120,0,80,150)}}}else if(DSK(h)||DWN(h)){x.fillStyle=DSK(h)?"rgba(150,70,40,.13)":"rgba(70,70,140,.13)";x.fillRect(0,0,320,150)}}
  if(S.ev&&!RM&&n-FX.ex<1200){const by=36+((n/160|0)%2);RRF("#20241a",px-6,by-1,13,15,3);RRF("#fffbe8",px-5,by,11,13,2.5);R("#c9362b",px-.5,by+2,2,6);R("#c9362b",px-.5,by+9,2,2)}
- WEA(l,n);return l};
+ WEA(sub?(out?1:0):l,n);MCARD(n);return sub?"s:"+sub:l};
+
+// ===== v31 현장 배경: 사건 첫머리(장소를 밝히는 문장)를 읽어 그 장소를 그린다 =====
+// 식당·회의실·야외 훈련장·정비고·보급 창고·초소/해안 소초·강당·기자회견장·휴가 거리·의무대 + 사격장·상황실·함정 갑판
+// 못 고르면 원래 장면(생활관·연병장·행정반·야간…)을 그대로 쓴다
+const SUBK=[["range",/사격|사로|영점|표적|탄피|수류탄/],
+ ["mess",/식당|식판|배식|취사|짬밥|급식|식사 시간|아침 식사|점심 식사|저녁 식사|아침을 먹|점심을 먹|저녁을 먹/],
+ ["press",/기자회견|기자들|기자가|플래시|생방송|생중계|인터뷰|토론회|카메라 앞|방송 카메라/],
+ ["meet",/회의|브리핑|간담회|작전 계획|참모 회의|청문회|심사위원|예산 심사|국정감사|대책 회의/],
+ ["aud",/강당|정신교육|정신 교육|정신전력|위문 공연|공연|교회|성당|법당|종교 행사|군악대/],
+ ["mount",/행군|산속|산길|산 중턱|능선|유격|숙영|야영|텐트|혹한기|야외 기동|기동훈련|기동 훈련|전술 훈련|훈련장|진지 공사|참호|개인호|땅을 파/],
+ ["store",/창고|보급|탄약고|재물조사|불출|피복/],
+ ["motor",/정비고|정비|차량|트럭|운전병|수송|세차|장갑차/],
+ ["post",/초소|경계 근무|철책|GOP|소초|해안 경계|매복|순찰|근무 교대/],
+ ["ctrl",/상황실|통신실|무전|레이더|관제|암구호|당직실/],
+ ["street",/휴가 첫날|휴가 나와|휴가 중|휴가를 나|휴가 이틀째|휴가 마지막|외박|외출|고향|본가|번화가|편의점|PC방|카페|지하철|기차역|서울역/],
+ ["med",/의무대|군의관|의무실|진료|병원|링거|입실/],
+ ["deck",/갑판|함교|출항|항해|해상 경계|함정 근무/]],
+ SUBOUT={range:1,mount:1,post:1,street:1,deck:1},   // 바깥(하늘·날씨가 보인다)
+ // 첫 문장(없으면 둘째 문장)에서 가장 앞에 나온 장소 낱말
+ SUBPICK=(t,e)=>{if(!t||!e)return"";if(e.l==2||e.l==6||e.l==9||e.mg)return"";const s=String(t).replace(/^\[\d\d:\d\d\]\s*/,""),ps=s.replace(/([.!?…”])\s+/g,"$1\n").split("\n");
+  for(const p of ps.slice(0,2)){let bi=1e9,id="";for(const[k,re]of SUBK){const m=re.exec(p);if(m&&m.index<bi){bi=m.index;id=k}}
+   if(id){if(id=="deck"&&S.br!=2)id="";if(id=="post"&&e.l==3)id="";if(id)return id}}
+  return""},
+ SUBC={e:null,id:"",v:0},
+ SUBNOW=()=>S.ev&&SUBC.e===S.ev&&!S.mg?SUBC.id:"",
+ // 창문 밖 하늘(시간대)
+ WINF=td=>td=="n"?LG(0,0,0,40,[[0,"#0b1020"],[1,"#1a2640"]]):td=="d"?LG(0,0,0,40,[[0,"#8dbbe0"],[1,"#d8ecf4"]]):LG(0,0,0,40,[[0,"#3e3f6a"],[1,"#e6a27a"]]),
+ WIN=(X,Y,W,H,td,fr)=>{R(fr||"#6f6c5c",X-2,Y-2,W+4,H+4);x.save();x.translate(0,Y);x.fillStyle=WINF(td);x.fillRect(X,0,W,H);x.restore();R(fr||"#6f6c5c",X+W/2-1,Y,2,H);R("rgba(255,255,255,.18)",X,Y,W,1.2)},
+ // 원근 바닥(타일·콘크리트)
+ FLOOR=(y0,c0,c1,ln,vx)=>{x.fillStyle=LG(0,y0,0,150,[[0,c0],[1,c1]]);x.fillRect(0,y0,320,150-y0);x.strokeStyle=ln;x.lineWidth=.5;vx=vx||160;
+  for(let i=-12;i<=22;i++){x.beginPath();x.moveTo(vx+(i*28-vx)*.36,y0);x.lineTo(i*28,150);x.stroke()}let y=y0+3,d=3;while(y<150){x.beginPath();x.moveTo(0,y);x.lineTo(320,y);x.stroke();d*=1.32;y+=d}},
+ // 작은 사람(배경 인물): 옆모습 행군 / 뒷모습 머리 / 엎드려쏴 / 침대에 누운 사람 / 민간인
+ CAMC=()=>S.br==1?["#7a6a50","#5d4f3f"]:SHIP(S)?["#2b3e61","#1a273f"]:["#5a6644","#3f4a32"],
+ WALKER=(X,Y,s,ph,ruck)=>{const[c0,c1]=CAMC(),l=Math.sin(ph)*2.2*s;x.save();x.translate(X,Y);x.scale(s,s);
+  R(c1,-1.5+l*.5,-6,2,6);R(c1,.5-l*.5,-6,2,6);R("#151515",-2+l*.5,-.6,3,1.2);R("#151515",0-l*.5,-.6,3,1.2);   // 다리·전투화
+  R(c0,-2.5,-14,5,8.5);if(ruck){R("#4a4a36",-5.6,-14.5,3.6,7);R("#3a3a2a",-5.6,-15.4,3,1)}R("#e3b48c",-1.2,-17.2,3,3);RRF(c1,-2.6,-19.2,5.2,2.6,1.3);   // 몸·배낭·얼굴·방탄모
+  R("#1d1d1a",1.4,-13,5.4,.8);R(c0,1,-12.6,1.6,4);x.restore()},   // 소총
+ BACKHEAD=(X,Y,s,cap)=>{const[c0,c1]=CAMC();x.save();x.translate(X,Y);x.scale(s,s);RRF(c0,-6,0,12,7,3);R("#d4a47e",-1.6,-3,3.2,3.4);RRF("#2a2018",-3.2,-7,6.4,4.6,2.2);if(cap){RRF(c1,-3.6,-8.6,7.2,3,1.2);R("rgba(0,0,0,.25)",-3.6,-6,7.2,.6)}x.restore()},
+ PRONE=(X,Y,s)=>{const[c0,c1]=CAMC();x.save();x.translate(X,Y);x.scale(s,s);x.lineCap="round";   // 엎드려쏴(뒤에서 본 모습)
+  x.strokeStyle=c1;x.lineWidth=2.8;x.beginPath();x.moveTo(-6.8,5.4);x.lineTo(-1.8,-2.4);x.moveTo(6.8,5.4);x.lineTo(1.8,-2.4);x.stroke();
+  RRF("#141414",-9.4,4.6,4.8,2.8,1.2);RRF("#141414",4.6,4.6,4.8,2.8,1.2);RRF(c0,-4.4,-7.6,8.8,6.8,2.4);
+  x.strokeStyle=c0;x.lineWidth=2.2;x.beginPath();x.moveTo(-3.6,-6.4);x.lineTo(-6.8,-10.2);x.moveTo(3.6,-6.4);x.lineTo(5.8,-10.2);x.stroke();
+  RRF(c1,-3,-11.4,6,4.4,2.2);R("#1d1d1a",1.3,-18.6,1.2,9.6);R("#1d1d1a",.4,-11.2,2.8,1.5);x.lineCap="butt";x.restore()},
+ LIER=(X,Y,s,blk)=>{x.save();x.translate(X,Y);x.scale(s,s);RRF("#f1eee3",-14,-3,7,5,2);R("#e3b48c",-12,-5.2,4,4);R("#2a2018",-12,-5.6,4,1.4);RRF(blk||"#5f6b45",-8,-4,22,7,2.5);R("rgba(0,0,0,.18)",-8,1.6,22,1.4);x.restore()},
+ CIV=(X,Y,s,ph,c)=>{const l=Math.sin(ph)*2*s;x.save();x.translate(X,Y);x.scale(s,s);R("#2e3a52",-1.5+l*.5,-6,2,6);R("#2e3a52",.5-l*.5,-6,2,6);R(c,-2.6,-14,5.2,8.4);R("#e3b48c",-1.3,-17.4,3,3.2);R("#2a2018",-1.5,-18,3.4,1.4);x.restore()},
+ // 배경 인물 중 정면으로 앉은 사람: 몸 아래쪽은 탁자 앞면(앞 그림층)이 가린다
+ SEAT=(X,Y,s,n,k,g)=>{x.save();x.translate(X,Y);x.scale(s,s);man(0,0,n,0,k||4,g||0);x.restore()};
+
+// ---------- 정적인 배경(한 번 그려 둔다). k = 장소, br = 군, td = 시간대, sn = 눈, v = 변형 ----------
+const SUBBG={
+ mess:(br,td,sn)=>{x.fillStyle=LG(0,0,0,84,[[0,"#e4e0c9"],[1,"#d2cdb3"]]);x.fillRect(0,0,320,86);R("#6d7a53",0,60,320,26);R("#56623f",0,58,320,2.4);R("#46512f",0,84,320,2);
+  WIN(214,10,38,28,td);WIN(262,10,38,28,td);
+  RRF("#5a4630",16,7,96,46,2);RRF("#2f4a3a",19,10,90,40,1);TT("오늘의 식단",64,20,"#f2efe0",7,{d:1});["중식 · 제육볶음 · 쌀밥","콩나물국 · 배추김치","후식 · 초코파이"].forEach((t,i)=>TT(t,64,30.5+i*7.4,"#dfe8d8",5.2));
+  RRF("#2a2a26",150,9,17,17,8.5);RRF("#f4f2ea",151.4,10.4,14.2,14.2,7.1);R("#222",158,12.4,.8,6);R("#222",158.4,17.8,4,.8);
+  RRF("#c74b3c",176,12,28,34,1.5);TT("잔반",190,24,"#fff",6,{d:1});TT("ZERO",190,33,"#ffe9a8",6.6,{d:1});R("#a83a2e",176,42,28,4);
+  FLOOR(86,"#d3cfc2","#b2ad9d","rgba(90,85,70,.18)");
+  // 배식대(스테인리스)와 국솥 · 식판 더미
+  x.fillStyle="#aab3b9";x.beginPath();x.moveTo(0,70);x.lineTo(104,70);x.lineTo(112,78);x.lineTo(0,78);x.fill();R("#8d969c",0,78,112,24);R("#6f787e",0,100,112,2);for(let i=0;i<5;i++)R("rgba(255,255,255,.14)",6+i*22,80,1,19);
+  [["#f4f1e6",6],["#c9473a",26],["#8a5a3a",46],["#e8d27a",66]].forEach(([c,X])=>{R("#6f787e",X,69,18,4);R(c,X+1,69.4,16,2.6);R("rgba(255,255,255,.25)",X+1,69.4,16,.6)});
+  R("rgba(210,235,250,.32)",2,50,100,18);R("#9aa3a9",2,49,100,1.2);R("#9aa3a9",2,49,1,20);R("#9aa3a9",101,49,1,20);
+  RRF("#7d868c",86,56,22,15,2);R("#9aa3a9",86,56,22,2.4);R("#5e666b",88,71,18,1.6);
+  for(let i=0;i<7;i++){RRF("#b7bec3",116,72-i*1.6,26,3,1);R("#8d969c",116,74-i*1.6,26,.6)}
+  if(td=="n")DARK(.22)},
+ meet:(br,td,sn,v)=>{x.fillStyle=LG(0,0,0,92,[[0,"#d6d1bf"],[1,"#c8c2ab"]]);x.fillRect(0,0,320,92);R("#5d4128",0,58,320,34);for(let i=0;i<16;i++)R("rgba(0,0,0,.14)",i*20+19,58,1,34);R("#4a321e",0,56,320,2.4);
+  R("#3a3a36",22,4,120,3);RRF("#efefe9",26,7,112,50,1);R("rgba(0,0,0,.08)",26,55,112,2);
+  RRF("#2a2a26",248,8,16,16,8);RRF("#f4f2ea",249.3,9.3,13.4,13.4,6.7);R("#222",255.6,11,.8,5.6);R("#222",256,16.2,3.6,.8);
+  R("#c9ccc4",272,10,1.2,46);TGK(274,11,1.3);R("#c9ccc4",300,10,1.2,46);RRF(v?"#2a4c8a":"#7a1f2a",302,11,15,11,1);R("#e8c63a",302,21.6,15,1.2);TT(v?"국":"★",309.5,19.6,"#f2e6b0",6,{d:1});
+  FLOOR(92,"#6a5440","#4f3e2e","rgba(0,0,0,.12)");
+  x.fillStyle="#2f4a34";x.beginPath();x.moveTo(14,84);x.lineTo(306,84);x.lineTo(318,96);x.lineTo(2,96);x.closePath();x.fill();R("rgba(255,255,255,.07)",14,84,292,1);
+  for(let i=0;i<7;i++){const X=24+i*42;R("#f4f2ea",X,86,10,3);R("#3a3a36",X+1,86.4,8,.6);RRF("#7fb3d6",X+14,83,3,7,1);R("#e9e6dc",X+19,88,9,5)}
+  if(td=="n")DARK(.18)},
+ mount:(br,td,sn)=>{MTN(60,10,td=="n"?"#121a26":sn?"#b9c5cc":"#8ea3b7",31);MTN(72,9,td=="n"?"#0e1610":sn?"#dfe6e8":"#55703f",71);
+  for(let i=0;i<46;i++){const X=HSn(i,1,5)*330-6,Y=70+HSn(i,2,5)*10,s=.45+HSn(i,3,5)*.35;TREE(X,Y,s,td=="n"?"#0b130c":sn?"#8da29a":i%3?"#2f4a26":"#3c5a2c");if(sn){x.fillStyle="#f2f5f5";x.beginPath();x.moveTo(X,Y-18*s);x.lineTo(X+3*s,Y-10*s);x.lineTo(X-3*s,Y-10*s);x.fill()}}
+  x.fillStyle=sn?LG(0,82,0,150,[[0,"#eef2f3"],[1,"#d2dade"]]):LG(0,82,0,150,[[0,"#6f7d45"],[1,"#56603a"]]);x.fillRect(0,82,320,68);
+  x.fillStyle=sn?"#c9d2d6":"#9a8358";x.beginPath();x.moveTo(-10,150);x.bezierCurveTo(60,120,110,104,200,96);x.lineTo(330,90);x.lineTo(330,98);x.bezierCurveTo(220,104,130,118,60,150);x.fill();
+  for(let i=0;i<26;i++){const X=HSn(i,4,9)*320,Y=98+HSn(i,5,9)*50;R(sn?"rgba(150,170,180,.35)":"rgba(40,60,20,.35)",X,Y,3,1.2)}
+  // 분대 텐트(A형)와 배낭·탄약통
+  x.fillStyle=sn?"#7d8a6c":"#4b5a3a";x.beginPath();x.moveTo(236,98);x.lineTo(266,66);x.lineTo(304,98);x.closePath();x.fill();x.fillStyle=sn?"#6c785e":"#3e4a30";x.beginPath();x.moveTo(266,66);x.lineTo(304,98);x.lineTo(296,98);x.lineTo(266,72);x.fill();
+  x.fillStyle="#2a3020";x.beginPath();x.moveTo(258,98);x.lineTo(266,80);x.lineTo(274,98);x.fill();R("#6b5a3a",265.4,62,1.2,6);if(sn){x.fillStyle="#f4f7f7";x.beginPath();x.moveTo(266,64.5);x.lineTo(248,85);x.lineTo(252,85);x.lineTo(266,69);x.lineTo(281,85);x.lineTo(285,85);x.fill()}
+  R("#6a6a5a",292,74,2,12);RRF("#4a4a36",226,92,10,8,2);RRF("#3a3f2a",212,94,11,7,1.5);R("#d9c27a",215,96,5,1.4);RRF("#4a4a36",310,92,8,8,2);
+  if(td=="n")DARK(.45)},
+ motor:(br,td,sn)=>{const air=br==3;
+  if(air){x.fillStyle=LG(0,0,0,96,[[0,"#4d5458"],[1,"#6b7276"]]);x.fillRect(0,0,320,96);for(let i=0;i<9;i++){x.strokeStyle="rgba(0,0,0,.25)";x.lineWidth=1;x.beginPath();x.moveTo(0,8+i*9);x.quadraticCurveTo(160,-4+i*9,320,8+i*9);x.stroke()}
+   for(let i=0;i<4;i++){R("#2a2e30",40+i*80,6,1,10);RRF("#fff6d8",34+i*80,15,14,3,1.5)}}
+  else{x.fillStyle=LG(0,0,0,96,[[0,"#7f8778"],[1,"#6e7668"]]);x.fillRect(0,0,320,96);for(let i=0;i<40;i++)R(i%2?"rgba(0,0,0,.1)":"rgba(255,255,255,.06)",i*8,0,4,96);R("#4a4f45",0,0,320,5);
+   for(let i=0;i<4;i++){R("#2a2e2a",40+i*80,5,1,9);x.fillStyle="#3a3f3a";x.beginPath();x.moveTo(34+i*80,14);x.lineTo(48+i*80,14);x.lineTo(45+i*80,18);x.lineTo(37+i*80,18);x.fill();RRF("#fff3c8",38+i*80,18,6,1.6,.8)}
+   R("#55594f",112,16,96,78);x.save();x.translate(0,18);x.fillStyle=td=="n"?"#0d1424":td=="d"?LG(0,0,0,60,[[0,"#a7cbe6"],[1,"#e3efe9"]]):LG(0,0,0,60,[[0,"#3e3f6a"],[1,"#e6a27a"]]);x.fillRect(116,0,88,56);x.restore();
+   R(sn?"#e9eef0":"#9c8a62",116,74,88,20);for(let i=0;i<7;i++)R("#45493f",112,16+i*3,96,1.6);R("rgba(255,240,200,.1)",116,40,88,54)}
+  FLOOR(94,"#a19f95","#7e7c72","rgba(40,40,35,.16)");R("#e2b93b",0,118,320,2);R("#e2b93b",0,142,320,1.4);
+  for(let i=0;i<5;i++){x.fillStyle="rgba(30,25,20,.18)";x.beginPath();x.ellipse(40+HSn(i,1,4)*240,104+HSn(i,2,4)*40,8+HSn(i,3,4)*10,2.4,0,0,6.2832);x.fill()}
+  if(air){x.fillStyle="#8a9298";x.beginPath();x.moveTo(-6,78);x.lineTo(70,74);x.lineTo(104,70);x.lineTo(120,74);x.lineTo(104,80);x.lineTo(-6,84);x.closePath();x.fill();x.fillStyle="#7a8288";x.beginPath();x.moveTo(30,76);x.lineTo(52,56);x.lineTo(62,56);x.lineTo(56,76);x.fill();
+   x.beginPath();x.moveTo(40,82);x.lineTo(70,96);x.lineTo(80,96);x.lineTo(66,82);x.fill();RRF("#4a6a86",96,70,10,4,2);R("#2a2e30",30,84,2,12);R("#2a2e30",86,82,2,14);RRF("#1d1d1d",27,94,8,5,2.5);RRF("#1d1d1d",83,94,8,5,2.5);R("#e8c63a",100,82,1,16);R("#e8c63a",96,88,10,1);R("#e8c63a",96,93,10,1)}
+  else if(br==1){x.fillStyle="#5d5a3c";x.beginPath();x.moveTo(2,66);x.lineTo(92,66);x.lineTo(104,78);x.lineTo(104,94);x.lineTo(2,94);x.closePath();x.fill();R("#4a4730",2,66,90,4);R("#2a2a22",0,92,106,8);for(let i=0;i<9;i++)RRF("#3a3a30",4+i*11,93,8,6,3);RRF("#3d4a5a",80,70,10,6,1);TT("KAAV",40,82,"#d9d2a8",6,{d:1})}
+  else{x.fillStyle="#4c5a3a";x.fillRect(4,62,64,30);x.fillStyle="#56643f";x.beginPath();x.moveTo(4,60);x.lineTo(68,60);x.lineTo(68,64);x.lineTo(4,64);x.fill();for(let i=0;i<5;i++)R("rgba(0,0,0,.14)",8+i*12,62,1,30);
+   x.fillStyle="#4b5a3a";x.beginPath();x.moveTo(70,92);x.lineTo(70,70);x.lineTo(84,66);x.lineTo(100,66);x.lineTo(104,78);x.lineTo(104,92);x.fill();RRF("#3d5468",86,69,12,8,1);R("#22261e",0,90,106,4);
+   [[16],[52],[90]].forEach(([X])=>{RRF("#1b1b1b",X,86,14,14,7);RRF("#5a5a52",X+4,90,6,6,3)});TT("2½t",36,79,"#d9d2a8",6,{d:1});
+   R("#2b2b27",40,100,22,3);R("#151515",58,99,4,4);R("#151515",54,99,3,4)}   // 차 밑 정비병 다리
+  if(!air){R("#5b604f",232,24,80,52);for(let i=0;i<8;i++)for(let j=0;j<5;j++)R("rgba(0,0,0,.25)",236+i*10,28+j*10,1.2,1.2);
+   [[240,30,2,16],[252,32,10,3],[268,30,2,18],[282,34,12,3],[298,30,3,14],[244,52,14,3],[266,54,2,14],[284,52,9,9]].forEach(([X,Y,W,H])=>R("#c9c5b0",X,Y,W,H))}
+  [[226,78,"#2f5a8a"],[244,80,"#c9473a"],[296,80,"#3f6a3a"]].forEach(([X,Y,c])=>{RRF(c,X,Y,14,20,2);R("rgba(0,0,0,.25)",X,Y+5,14,1);R("rgba(0,0,0,.25)",X,Y+12,14,1);R("rgba(255,255,255,.18)",X+2,Y,2,20)});
+  for(let i=0;i<3;i++)RRF("#1d1d1d",262,96-i*5,22,6,3);
+  if(td=="n")DARK(.3)},
+ store:(br,td,sn)=>{x.fillStyle=LG(0,0,0,96,[[0,"#787a6c"],[1,"#696b5d"]]);x.fillRect(0,0,320,96);for(let i=0;i<40;i++)R(i%2?"rgba(0,0,0,.08)":"rgba(255,255,255,.05)",i*8,0,4,96);
+  for(let i=0;i<4;i++){R("#2a2e2a",40+i*80,0,1,8);RRF("#fff3c8",36+i*80,8,9,2,1)}
+  const shelf=(X0,X1)=>{for(let r=0;r<4;r++){const Y=20+r*20;R("#4a4f45",X0,Y+16,X1-X0,2);for(let X=X0+2;X<X1-10;X+=13+HSn(X,r,3)*5){const c=["#56643f","#5d6b45","#8a7656","#4b5a3a","#a89a74"][(HSn(X,r,5)*5)|0],h=8+HSn(X,r,7)*7;RRF(c,X,Y+16-h,11,h,1);R("rgba(255,255,255,.2)",X+2,Y+18-h,6,1.4);if(HSn(X,r,8)>.6)R("#e8e2c8",X+3,Y+16-h/2-1,5,2)}}R("#3a3f36",X0,20,2,78);R("#3a3f36",X1-2,20,2,78)};
+  shelf(4,110);shelf(210,316);
+  FLOOR(96,"#9c9a8f","#7a786e","rgba(40,40,35,.14)");
+  R("#8a6a42",130,96,60,4);R("#6f5434",130,100,60,2);[[134,"#56643f"],[150,"#56643f"],[166,"#8a7656"]].forEach(([X,c],i)=>{RRF(c,X,86-(i==2?0:0),15,10,1);R("#e8e2c8",X+4,89,7,2)});RRF("#4b5a3a",142,76,15,10,1);R("#e8e2c8",146,79,7,2);
+  if(td=="n")DARK(.3)},
+ post:(br,td,sn)=>{const coast=br==1||br==2;
+  if(coast){x.fillStyle=td=="n"?LG(0,64,0,104,[[0,"#0a1428"],[1,"#060c18"]]):LG(0,64,0,104,[[0,"#4a86b6"],[1,"#2a5f8f"]]);x.fillRect(0,64,320,40);
+   x.fillStyle=td=="n"?"#141a1e":"#5c5e58";x.beginPath();x.moveTo(0,104);for(let X=0;X<=320;X+=16)x.lineTo(X,98+HSn(X,1,3)*6);x.lineTo(320,150);x.lineTo(0,150);x.fill();
+   for(let i=0;i<9;i++){const X=HSn(i,2,4)*320,Y=104+HSn(i,3,4)*30;RRF(td=="n"?"#1b2226":"#6e706a",X,Y,10+HSn(i,4,4)*14,6+HSn(i,5,4)*5,3)}}
+  else{MTN(66,10,td=="n"?"#121a26":sn?"#b9c5cc":"#8ea3b7",17);MTN(80,9,td=="n"?"#0e1610":sn?"#dfe6e8":"#55703f",53);x.fillStyle=sn?LG(0,88,0,150,[[0,"#eef2f3"],[1,"#d2dade"]]):LG(0,88,0,150,[[0,"#6a7a42"],[1,"#525d36"]]);x.fillRect(0,88,320,62)}
+  // 철책(Y자 기둥 + 윤형 철조망)
+  const fy=coast?100:94,pc=td=="n"?"#2a2f33":"#4e5357";for(let i=0;i<17;i++){const X=i*20+4;R(pc,X,fy-26,1.8,28);x.strokeStyle=pc;x.lineWidth=1;x.beginPath();x.moveTo(X+1,fy-26);x.lineTo(X-3,fy-31);x.moveTo(X+1,fy-26);x.lineTo(X+5,fy-31);x.stroke()}
+  x.strokeStyle=td=="n"?"rgba(140,150,160,.55)":"rgba(70,75,80,.75)";x.lineWidth=.55;for(let k=0;k<6;k++){x.beginPath();x.moveTo(0,fy-23+k*4);x.lineTo(320,fy-23+k*4);x.stroke()}
+  for(let X=0;X<330;X+=5){x.beginPath();x.arc(X,fy-31,3,0,6.2832);x.stroke()}
+  // 초소(콘크리트 · 총안구 · 모래주머니)
+  R(td=="n"?"#2e3328":"#8f927f",226,56,72,44);R(td=="n"?"#262a22":"#6b6e5d",220,50,84,8);R("#1c201a",242,68,40,7);R(td=="n"?"#ffd98a":"#2a2f26",246,69.5,32,4);SAND(214,92,9);
+  R("#c9362b",30,70,26,14);R("#f4f0e0",31.2,71.2,23.6,11.6);TT("경계지역",43,79.5,"#c9362b",5.6,{d:1});R("#4e5357",42,84,2,10);
+  if(td=="n")DARK(.35)},
+ aud:(br,td,sn,v)=>{x.fillStyle="#2a2420";x.fillRect(0,0,320,150);x.fillStyle=LG(0,0,0,30,[[0,"#3a2e26"],[1,"#2e2620"]]);x.fillRect(0,0,320,30);
+  R("#6e5136",30,66,260,10);x.fillStyle=LG(0,32,0,66,[[0,"#3b3a3f"],[1,"#2e2d33"]]);x.fillRect(40,30,240,36);R("#4a3420",30,76,260,4);
+  for(const s of[0,1]){for(let i=0;i<8;i++){const X=s?282-i*5:4+i*5;R(i%2?"#7a1a22":"#8f2028",X,8,6,70)}R("rgba(0,0,0,.25)",s?278:38,8,4,70)}
+  R("#7a1a22",30,4,260,8);for(let i=0;i<26;i++)R(i%2?"#8f2028":"#6e161d",30+i*10,10,10,5);
+  RRF("#efe7c8",76,15,168,13,2);TT(["정신전력교육","장병 위문 공연","종교 행사"][v|0],160,24.6,"#7a1a22",8.4,{d:1});
+  RRF("#5e4026",146,48,28,20,2);R("#7a5634",146,48,28,3);TGK(154,54,1);
+  x.fillStyle=LG(0,80,0,150,[[0,"#3a2c22"],[1,"#2a201a"]]);x.fillRect(0,80,320,70);for(let i=0;i<6;i++)R("rgba(255,255,255,.03)",0,86+i*11,320,1)},
+ press:(br,td,sn,v)=>{x.fillStyle=LG(0,0,0,100,[[0,"#173562"],[1,"#1f4478"]]);x.fillRect(0,0,320,100);
+  for(let r=0;r<5;r++)for(let c=0;c<7;c++){const X=14+c*46+(r%2)*23,Y=10+r*18;TT(v?"국회":"국방부",X,Y,"rgba(255,255,255,.16)",6,{d:1});x.strokeStyle="rgba(255,255,255,.12)";x.lineWidth=.6;x.beginPath();x.arc(X-12,Y-2.6,3,0,6.2832);x.stroke()}
+  R("#c9ccc4",28,14,1.4,74);TGK(30,15,1.4);R("#c9ccc4",290,14,1.4,74);RRF(v?"#2a4c8a":"#1f3a6a",292,15,18,13,1);R("#e8c63a",292,26.4,18,1.4);
+  x.fillStyle=LG(0,100,0,150,[[0,"#3a3f4a"],[1,"#2a2e36"]]);x.fillRect(0,100,320,50);R("#4a505c",0,99,320,2)},
+ street:(br,td,sn)=>{const nt=td=="n";
+  const B=[[0,30,52,"#b9a58a","편의점","#2a7a4a"],[54,18,58,"#9aa6b0","PC방","#2a4c8a"],[114,36,46,"#c2b39a","치킨","#c9362b"],[162,24,52,"#a9b4a0","카페","#6b4a2c"],[216,14,56,"#b0a8a0","노래방","#8a2a8a"],[274,28,50,"#bfae94","약국","#2a7a4a"]];
+  for(const[X,Y,W,c,sg,sc]of B){R(nt?"#2a2d36":c,X,Y,W,92-Y);R("rgba(0,0,0,.12)",X+W-3,Y,3,92-Y);for(let r=0;r<Math.floor((62-Y)/12);r++)for(let k=0;k<Math.floor((W-6)/11);k++){const lit=nt?HSn(X+k,r,3)>.35:0;R(lit?"#f1d98a":nt?"#1a1e28":"#5f7d96",X+4+k*11,Y+5+r*12,7,7)}
+   RRF(sc,X+3,72,W-6,9,1.5);TT(sg,X+W/2,79,"#fff",6.6,{d:1});R(nt?"#f3e3a8":"#e8e2d0",X+4,82,W-8,10);R("rgba(0,0,0,.25)",X+4,82,W-8,1)}
+  R("#c9c7c0",0,92,320,12);for(let i=0;i<32;i++)R("rgba(0,0,0,.07)",i*10,92,1,12);R("#8a8880",0,104,320,2);
+  x.fillStyle=nt?"#24262c":"#55585e";x.fillRect(0,106,320,44);for(let i=0;i<9;i++)R("#e8e2c8",i*40+6,127,20,1.6);
+  R("#5a6a7a",8,64,2,30);RRF("#2a4c8a",4,58,24,8,1.5);TT("버스",16,64.4,"#fff",5.4,{d:1});R("rgba(160,200,230,.35)",12,70,22,20);R("#5a6a7a",34,68,1.6,26);
+  for(const X of[100,206,300]){R("#5a4632",X,70,3,24);x.fillStyle=sn?"#d9e2e4":nt?"#1c2a1c":"#4f7a3a";x.beginPath();x.arc(X+1.5,64,10,0,6.2832);x.fill()}
+  if(nt)DARK(.2)},
+ med:(br,td,sn)=>{x.fillStyle=LG(0,0,0,92,[[0,"#e6ece6"],[1,"#d4ddd6"]]);x.fillRect(0,0,320,92);R("#9fb7a8",0,64,320,28);R("#86a090",0,62,320,2);
+  WIN(130,10,50,30,td,"#9aa39c");RRF("#f2f2ee",30,12,40,40,2);R("#c9362b",46,18,8,28);R("#c9362b",36,28,28,8);
+  FLOOR(92,"#cfd6cf","#aeb8b0","rgba(60,80,70,.12)");
+  for(const X of[200,256]){R("#8a9a94",X,74,50,3);RRF("#f4f4f0",X,68,50,10,2);RRF("#eef0ec",X+2,66,12,5,2);R("#8a9a94",X+2,78,2,16);R("#8a9a94",X+46,78,2,16);R("#9aa6a2",X+56,40,1.4,54);RRF("#cfe6f0",X+52,40,8,10,2)}
+  R("rgba(120,170,150,.5)",186,20,2,72);for(let i=0;i<5;i++)R("rgba(140,190,170,.35)",188+i*3,20,2,60)}};
+
+// ---------- 앞 그림층(배경 인물 앞에 오는 것): 탁자 앞면·관객 줄·기자석 ----------
+const SUBFG={
+ mess:()=>{[[0,"#cdbb98","#bfae8c"],[1,"#c4b18c","#b6a582"]].forEach(([i,c,cf])=>{const y=74+i*15;x.fillStyle=c;x.beginPath();x.moveTo(232-i*8,y);x.lineTo(320,y);x.lineTo(320,y+7);x.lineTo(224-i*8,y+7);x.fill();R("rgba(255,255,255,.12)",232-i*8,y,88+i*8,.8);
+   for(let k=0;k<3;k++){const X=240+k*26-i*6;RRF("#b7bec3",X,y+1.2,14,4,1);R("#f4f1e6",X+1.4,y+1.8,4,2.6);R("#c9473a",X+6,y+1.8,3,1.2);R("#8a5a3a",X+6,y+3.2,3,1.2);R("#e8d27a",X+9.6,y+1.8,3,2.6)}
+   R(cf,224-i*8,y+7,96+i*8,3.6);R("rgba(0,0,0,.18)",224-i*8,y+10.6,96+i*8,1);for(let k=0;k<4;k++)RRF("#6f787e",232+k*24-i*8,y+11,8,3,1.4)})},
+ meet:()=>{R("#26392b",2,96,316,6);R("rgba(0,0,0,.25)",2,102,316,1.4);for(let i=0;i<9;i++)RRF("#2a2a2a",12+i*36,100,14,6,2)},
+ aud:()=>{for(let r=0;r<3;r++){const y=118+r*12,s=.9+r*.12;for(let i=0;i<12;i++){const X=8+i*27+(r%2)*13;BACKHEAD(X,y,s,1)}}}};
+
+// ---------- 배경 인물(움직임 포함)과 장소마다 움직이는 효과 ----------
+const SUBX={
+ mess:n=>{SEAT(252,62,.6,n,4,0);SEAT(292,62,.6,n+400,4,0);SEAT(268,77,.63,n+900,4,0)},
+ meet:n=>{const sg=stage()>=5;[[44,1],[82,2],[252,3],[290,2]].forEach(([X,g],i)=>SEAT(X,61,.62,n+i*310,3,sg?0:g))},
+ mount:n=>{for(let i=0;i<6;i++){const p=((n/26000)+i*.085)%1,X=-20+p*360,Y=96-Math.sin(p*3.14)*6-p*4;WALKER(X,Y,.55+p*.12,n/180+i,1)}},
+ range:n=>{for(let i=0;i<4;i++){const X=[28,76,252,298][i],Y=122;PRONE(X,Y,.9);const T=(n+i*730)%2600;if(T<70&&!RM){R("#ffe08a",X-.2,Y-20.6,2.8,3);x.fillStyle="rgba(255,220,140,.35)";x.beginPath();x.arc(X+1.2,Y-19,4,0,6.2832);x.fill()}
+   else if(T<500){x.fillStyle=`rgba(220,220,210,${.35*(1-T/500)})`;x.beginPath();x.arc(X+T/120,Y-17-T/60,1.4+T/200,0,6.2832);x.fill()}}},
+ motor:n=>{if(S.br!=3)SEAT(300,78,.6,n,4,0);if(!RM&&(n%3400)<340){const ph=n%3400;for(let i=0;i<6;i++){const a=HSn(i,ph/60|0,5)*6.28,r=2+HSn(i,1,ph/60|0)*7;R(i%2?"#ffe08a":"#fff3c8",(S.br==3?100:58)+Math.cos(a)*r,(S.br==3?96:100)+Math.sin(a)*r*.6-2,1,1)}}},
+ store:n=>{SEAT(60,80,.6,n,4,0);SEAT(268,80,.6,n+700,4,0)},
+ post:n=>{const td=TOD();if(S.br==1||S.br==2){x.fillStyle="rgba(255,255,255,.35)";for(let i=0;i<12;i++){const X=(HSn(i,0,9)*320+n/40*(i%2?1:-1))%340-10;x.fillRect(X,70+HSn(i,1,9)*30,8+HSn(i,2,9)*8,.7)}}
+  RRF("#3a4430",256,64,10,6,2);R("#e3b48c",258,66,5,3);if(td=="n"&&!RM){const a=Math.sin(n/1700)*.7;x.save();x.translate(262,62);x.rotate(Math.PI+.25+a);x.fillStyle=LG(0,0,170,0,[[0,"rgba(255,245,200,.4)"],[1,"rgba(255,245,200,0)"]]);x.beginPath();x.moveTo(0,0);x.lineTo(170,-18);x.lineTo(170,18);x.closePath();x.fill();x.restore()}},
+ aud:n=>{if(RM)return;for(const s of[0,1]){const a=Math.sin(n/1300+s*2)*.5;x.save();x.translate(s?250:70,4);x.rotate(Math.PI/2+(s?.35:-.35)+a*.4);x.fillStyle=LG(0,0,90,0,[[0,"rgba(255,240,190,.22)"],[1,"rgba(255,240,190,0)"]]);x.beginPath();x.moveTo(0,0);x.lineTo(90,-12);x.lineTo(90,12);x.closePath();x.fill();x.restore()}},
+ press:n=>{for(let i=0;i<9;i++){const X=12+i*36,Y=124+(i%2)*8;RRF("#1c1f26",X-7,Y,14,26,4);RRF("#2a2d34",X-4,Y-7,8,8,4);RRF("#111",X-6,Y-4,9,6,1);R("#3a3d44",X-5,Y-3,3,3);
+   if(!RM&&HSn(i,n/90|0,7)>.93){x.fillStyle="rgba(255,255,255,.85)";x.beginPath();x.arc(X-3,Y-1,3.6,0,6.2832);x.fill();x.fillStyle="rgba(255,255,255,.18)";x.fillRect(0,0,320,150)}}},
+ street:n=>{for(let i=0;i<3;i++){const dir=i%2?-1:1,p=((n/(4200+i*900))+i*.37)%1,X=dir>0?-50+p*420:370-p*420,Y=dir>0?122:112,c=["#c9473a","#2f5a8a","#e8e2d0"][i];
+   RRF(c,X,Y,34,9,3);RRF(c,X+7,Y-6,18,7,3);R("rgba(170,210,240,.7)",X+9,Y-4.6,6,4.6);R("rgba(170,210,240,.7)",X+17,Y-4.6,6,4.6);RRF("#151515",X+5,Y+6.6,7,6,3);RRF("#151515",X+23,Y+6.6,7,6,3);if(TOD()=="n")R("#fff3b0",dir>0?X+32:X,Y+2,2,2.4)}
+  for(let i=0;i<3;i++){const p=((n/(16000+i*3000))+i*.3)%1,X=i%2?330-p*360:-10+p*360;CIV(X,100,.8,n/160+i,["#7a4a8a","#c97a3a","#4a7a6a"][i])}},
+ med:n=>{LIER(236,74,1);LIER(292,74,1,"#8a9a94")},
+ mess_fx:n=>{if(RM)return;for(let i=0;i<4;i++){const p=((n/1400)+i*.25)%1;x.fillStyle=`rgba(255,255,255,${.28*(1-p)})`;x.beginPath();x.arc(97+Math.sin(p*6+i)*3,54-p*22,2+p*4,0,6.2832);x.fill()}},
+ meet_fx:n=>{const k=(n/6200|0)%3;x.save();x.beginPath();x.rect(28,9,108,46);x.clip();
+  if(k==0){R("#e9eef2",28,9,108,46);x.strokeStyle="#7a8a98";x.lineWidth=.6;for(let i=0;i<6;i++){x.beginPath();x.moveTo(36+i*16,14);x.lineTo(30+i*18,52);x.stroke()}x.fillStyle="#2f5a8a";x.beginPath();x.moveTo(44,40);x.lineTo(80,28);x.lineTo(78,24);x.lineTo(92,26);x.lineTo(82,34);x.lineTo(80,31);x.lineTo(46,43);x.fill();x.fillStyle="#c9362b";x.beginPath();x.moveTo(126,18);x.lineTo(104,32);x.lineTo(106,35);x.lineTo(128,22);x.fill();TT("작전 개념도",82,19,"#1f2a36",6.2,{d:1})}
+  else if(k==1){R("#f4f4f0",28,9,108,46);TT("부대 현황",82,18,"#1f2a36",6.4,{d:1});[0.62,0.8,0.45,0.9].forEach((v,i)=>{R(["#2f5a8a","#4f9a5a","#c9a43a","#c9473a"][i],44+i*22,50-v*26,14,v*26)});R("#1f2a36",40,50,92,.8)}
+  else{R("#f4f4f0",28,9,108,46);TT(stage()>=5?"예산안 심사":"교육 훈련 계획",82,18,"#1f2a36",6.2,{d:1});for(let i=0;i<5;i++){R("#2f5a8a",40,24+i*6,3,3);R("#9aa3aa",46,25+i*6,40+HSn(i,k,3)*40,1.6)}}
+  x.restore();if(!RM){x.fillStyle="rgba(255,255,240,.05)";x.beginPath();x.moveTo(82,4);x.lineTo(26,56);x.lineTo(138,56);x.closePath();x.fill()}},
+ mount_fx:n=>{if(RM)return;const td=TOD();for(let i=0;i<4;i++){const X=((n/90)*(i%2?1:.7)+i*110)%420-50;x.fillStyle=`rgba(255,255,255,${td=="n"?.05:.13})`;x.beginPath();x.ellipse(X,80+i*5,46,4.5,0,0,6.2832);x.fill()}
+  if(wn(S.d)){for(let i=0;i<4;i++){const p=((n/2200)+i*.25)%1;x.fillStyle=`rgba(230,230,230,${.4*(1-p)})`;x.beginPath();x.arc(293+p*8,72-p*20,1.4+p*3,0,6.2832);x.fill()}}}};
+
+// ---------- 사건 글을 받아 장소를 정한다(say 가로채기) ----------
+const SAY0=say;
+say=function(m,k){if(k==1&&S&&S.ev){const id=SUBPICK(m,S.ev);SUBC.e=S.ev;SUBC.id=id;SUBC.v=id=="aud"?(/공연|위문|군악대/.test(m)?1:/교회|성당|법당|종교/.test(m)?2:0):id=="meet"||id=="press"?(stage()>=5?1:0):0}return SAY0.apply(this,arguments)};
+
+// 현장 장면 그리기: 하늘 → 정적 배경 → 움직이는 효과 → 배경 인물 → 앞 그림층
+const SUBDRAW=(id,n)=>{const td=TOD(),sn=wn(S.d)?1:0,br=S.br|0,out=SUBOUT[id];
+ if(id=="range"||id=="ctrl"||id=="deck"){BGD(id=="ctrl"?"console":id,n)}
+ else{if(out)SKY(1,sn,n);BLIT(OFF("sub:"+id+":"+br+":"+td+":"+sn+":"+SUBC.v,320,150,()=>SUBBG[id](br,td,sn,SUBC.v)),0,0,320,150)}
+ if(SUBX[id+"_fx"])SUBX[id+"_fx"](n);if(SUBX[id])SUBX[id](n);
+ if(SUBFG[id])BLIT(OFF("subfg:"+id+":"+br,320,150,SUBFG[id]),0,0,320,150);
+ return out};
+
+// ---------- 사람 연출: 경례 · 선택 반응 · 평소 장면의 배경 인물 ----------
+let SALN=0;const RX={t:-1e9,v:0},
+ // 사건 인물이 나보다 높은 간부면 경례(병사는 부사관·장교 모두에게, 간부는 더 높은 계급에게)
+ SALOK=()=>{if(stage()>=5)return false;const r=S.npc==2?2:S.npc==1?NPCR(S.ev)[0]:null;if(typeof r!="number")return false;return!S.nco||(S.f&&S.f.trd)||r>(S.cr|0)},
+ REACTFX=(px,rt,n)=>{const a=Math.max(0,1-rt/1100);if(RX.v>0){for(let i=0;i<3;i++){const an=-1.9+i*.9,r=9+rt/90,X=px+Math.cos(an)*r,Y=60+Math.sin(an)*r*.7;x.globalAlpha=a;R("#ffe27a",X-.4,Y-1.6,.8,3.2);R("#ffe27a",X-1.6,Y-.4,3.2,.8);x.globalAlpha=1}}
+  else if(RX.v<0){x.globalAlpha=a;RRF("#bfe3ff",px+6,52+rt/80,2,3,1);R("#6a5a9a",px-4,40,.7,4);R("#6a5a9a",px-1,39,.7,5);R("#6a5a9a",px+2,40,.7,4);x.globalAlpha=1}},
+ // 평소 장면에도 사람을 둔다: 생활관(침상에 누운 병사) · 행정반(타자 치는 행정병) · 연병장(멀리 뛰는 분대)
+ BACKLIFE=(l,n)=>{const g=stage();if(S.mg)return;
+  if(l==0&&g<2){LIER(56,112,1.05,"#5f6b45");if(!S.npc)SEAT(270,85,.62,n+500,4,0)}
+  else if(l==5&&!S.npc){SEAT(286,72,.6,n+200,4,0);if(!RM&&(n%900)<450)R("#cfe3f6",276,62,6,.8)}
+  else if(l==1&&S.br<2&&!RM){for(let i=0;i<7;i++){const p=((n/30000)+i*.035)%1,X=-30+p*380;WALKER(X,90,.46,n/140+i,0)}}};
+const PICK0=pick;
+pick=function(o){const b=(S.hp||0)+(S.mt||0)+(S.rp||0),r=PICK0.apply(this,arguments),d=(S.hp||0)+(S.mt||0)+(S.rp||0)-b;if(Math.abs(d)>=2){RX.t=performance.now();RX.v=Math.sign(d)}return r};
+
+// ---------- 달이 바뀌면 달력 카드 ----------
+const MC={m:null,t0:-1e9,k:0},
+ MSUB=["한겨울 · 혹한기 훈련","겨울 끝자락 · 해빙 준비","봄 · 해빙기 안전 점검","봄 · 춘계 진지 공사","늦봄 · 체육대회의 달","초여름 · 호국보훈의 달","장마 · 수해 대비","한여름 · 을지 연습","가을 · 추계 진지 공사","가을 · 국군의 날","늦가을 · 김장·월동 준비","겨울 · 혹한기 준비"],
+ MCARDCK=()=>{const m=mo(S.d);if(MC.m==null||S.d<2||S.over){MC.m=m;return}if(m!==MC.m){MC.m=m;MC.k=m;MC.t0=performance.now()}},
+ MCARD=n=>{const t=n-MC.t0;if(t<0||t>2300)return;const a=t<300?t/300:t>1900?Math.max(0,(2300-t)/400):1,sl=RM?0:(1-EO(Math.min(1,t/420)))*-40;
+  x.globalAlpha=a*.86;R("#0d100a",0,48,320,52);x.globalAlpha=a;R("#c9a43a",0,48,320,1.4);R("#c9a43a",0,98.6,320,1.4);
+  x.save();x.translate(sl,0);RRF("#f2ecd6",112,56,34,36,3);R("#c9362b",112,56,34,9);R("#8a2a22",118,53,2,6);R("#8a2a22",138,53,2,6);TT(String(MC.k+1),129,86.5,"#2a2418",17,{d:1});
+  TT((MC.k+1)+"월",206,77,"#f6e7b0",19,{d:1,st:"rgba(0,0,0,.5)",sw:3});TT(MSUB[MC.k],206,92,"#cfc8a8",8.2);x.restore();x.globalAlpha=1};
+
+// ===== v31 현장 환경음: 장면에 맞는 은은한 배경 소리 =====
+// 낮 바깥: 바람 + 새소리(겨울엔 바람만) · 밤 바깥: 풀벌레(겨울엔 찬바람) · 비 · 바다(해군 부두·갑판·해안 초소) · 거리 소음 · 식당·강당 웅성임
+// ‘소리 켬/끔’ 버튼을 따른다. 사용자가 한 번이라도 누른 뒤(오디오가 깨어난 뒤)에만 소리를 낸다. 탭을 떠나면 멈춘다
+const AMB={k:"",L:null,nb:null,nx:0,cn:0},
+ AMBNB=a=>{if(AMB.nb&&AMB.nb.sampleRate==a.sampleRate)return AMB.nb;const n=a.sampleRate*3|0,b=a.createBuffer(1,n,a.sampleRate),d=b.getChannelData(0);let l=0;
+  for(let i=0;i<n;i++){l=(l+.02*(Math.random()*2-1))/1.02;d[i]=l*3.5}const f=Math.min(4000,n>>2);for(let i=0;i<f;i++){const w=i/f;d[i]=d[i]*w+d[n-f+i]*(1-w)}return AMB.nb=b},   // 갈색 잡음(끝을 이어 붙여 끊김 없이 돈다)
+ // 잡음 한 겹: 거르개 → 음량(느린 출렁임) → 장면 주 음량
+ AMBL=(a,out,o)=>{const s=a.createBufferSource();s.buffer=AMBNB(a);s.loop=true;s.playbackRate.value=o.r||1;let nd=s;
+  for(const[ty,f,q]of o.f){const b=a.createBiquadFilter();b.type=ty;b.frequency.value=f;if(q)b.Q.value=q;nd.connect(b);nd=b}
+  const g=a.createGain();g.gain.value=o.g;nd.connect(g);g.connect(out);const st=[s];
+  if(o.lfo){const l=a.createOscillator(),lg=a.createGain();l.frequency.value=o.lfo[0];lg.gain.value=o.lfo[1];l.connect(lg);lg.connect(g.gain);l.start();st.push(l)}
+  s.start(0,Math.random()*2);return{st,g}},
+ AMBSET={day:o=>[{f:[["lowpass",420]],g:o.w?.04:.024,lfo:[.07,o.w?.022:.014]}],
+  night:o=>[{f:[["lowpass",360]],g:o.w?.035:.012,lfo:[.05,o.w?.018:.006]}],
+  rain:()=>[{f:[["highpass",700],["lowpass",5200]],g:.05,r:1.6},{f:[["lowpass",300]],g:.02}],
+  sea:()=>[{f:[["lowpass",620]],g:.045,lfo:[.11,.032]},{f:[["highpass",1600],["lowpass",4200]],g:.012,lfo:[.11,.009],r:1.3}],
+  city:()=>[{f:[["lowpass",340]],g:.045,lfo:[.09,.012]}],
+  murmur:()=>[{f:[["bandpass",480,.9]],g:.022,lfo:[1.7,.008],r:1.1},{f:[["bandpass",900,1.2]],g:.008,lfo:[2.3,.004]}]},
+ // 지금 장면의 소리 종류
+ AMBK=()=>{if(!S||S.ttl||S.rl||S.over||S.mg)return"";const sub=SUBNOW(),l=sceneLoc(),h=HR(),nt=l==4||NTT(h),w=wn(S.d),br=S.br|0;
+  const out=sub?!!SUBOUT[sub]:OUTL.includes(l);
+  if(!out)return sub=="mess"||sub=="aud"?"murmur":"";
+  if(sub=="street")return"city";if(!w&&l!=4&&RAINY())return"rain";
+  if(sub=="deck"||(sub=="post"&&(br==1||br==2))||(!sub&&l==1&&br==2))return"sea";
+  return(nt?"night":"day")+(w?"w":"")},
+ AMBGO=k=>{const a=SND.ac,old=AMB.L;AMB.k=k;AMB.L=null;
+  if(old){const t=a.currentTime;old.m.gain.cancelScheduledValues(t);old.m.gain.setValueAtTime(old.m.gain.value,t);old.m.gain.linearRampToValueAtTime(0,t+.9);setTimeout(()=>{old.ly.forEach(q=>q.st.forEach(s=>{try{s.stop()}catch(e){}}));try{old.m.disconnect()}catch(e){}},1100)}
+  if(!k)return;const m=a.createGain();m.gain.value=0;m.connect(a.destination);const w=/w$/.test(k),base=k.replace(/w$/,"");
+  const ly=(AMBSET[base]||(()=>[]))({w}).map(o=>AMBL(a,m,o));const t=a.currentTime;m.gain.linearRampToValueAtTime(1,t+1.2);AMB.L={m,ly,k};AMB.nx=0},
+ // 새소리·풀벌레: 짧은 소리를 띄엄띄엄
+ AMBCH=(a,m,f0,f1,t,d,v)=>{const o=a.createOscillator(),g=a.createGain();o.type="sine";o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+d);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(m);o.start(t);o.stop(t+d+.02)},
+ AMBTICK=()=>{const a=SND.ac;if(!a)return;const k=SND.on&&a.state=="running"&&!(typeof document!="undefined"&&document.hidden)?AMBK():"";
+  if(k!==AMB.k)AMBGO(k);const L=AMB.L;if(!L)return;const t=a.currentTime;if(t<AMB.nx)return;
+  if(L.k=="day"){const n=2+(Math.random()*3|0),f=2400+Math.random()*1400;for(let i=0;i<n;i++)AMBCH(a,L.m,f*(1+Math.random()*.15),f*1.45,t+i*(.09+Math.random()*.05),.07+Math.random()*.05,.012);AMB.nx=t+2.5+Math.random()*5}
+  else if(L.k=="night"){const f=AMB.cn++%2?4300:4900;for(let i=0;i<3;i++)AMBCH(a,L.m,f,f*.98,t+i*.045,.028,.0065);AMB.nx=t+.35+Math.random()*.7}
+  else if(L.k=="city"){if(Math.random()<.5)AMBCH(a,L.m,520,380,t,.18,.004);AMB.nx=t+3+Math.random()*4}
+  else AMB.nx=t+5};
+// 매 장면 그릴 때마다 소리도 맞춘다(제목·룰렛·결과 화면에선 조용히)
+const DRAW0=draw;draw=function(n){DRAW0(n);try{AMBTICK()}catch(e){}};
+if(typeof document!="undefined")document.addEventListener("visibilitychange",()=>{try{AMBTICK()}catch(e){}});
 
 window.GFXHD=GFXHD;window.GFXCD=GFXCD;
 })();
