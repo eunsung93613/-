@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://armytiger.vercel.app/sitemap.xml
