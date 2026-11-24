@@ -458,6 +458,7 @@ body.b1.mtr #rk{background:#e2c23a;color:#1d1a0c;border-color:#6b5a12}
 <div id="toast" role="status" aria-live="polite"></div>
 <div id="mw" hidden><div id="mwp" class="mwp" role="dialog" aria-modal="true"></div></div>
 <script>
+// v30 이스터에그: 이름을 ‘김정빈’으로 하면 일병 진급 날 병크 사건 → 군사법원 무기징역 → 강제 전역, 판결문 ‘전설의 개폐급’(동기는 무조건 김동유)
 // v29 고증: 군복 — 3군 통합 디지털 무늬(공군 포함)·해병 무늬·해군 함상복, 간부 계급장은 옷깃·병은 가슴, 명찰 위치, 전 계급 팔각모, 훈련병 노란 명찰·계급장 없음, 상의 밖으로 내어 입기, 입영 날 사복, 지휘관 견장 폐지 반영
 // v28 개선: 고해상도 화면, 미니게임 18종 새 그림(브리핑·3초 카운트다운·입자 효과·평가표 도장), 군별 전투복 병사, 장면 배경, 효과음
 // v27 추가: 돈 — 계급별 실제 봉급(2026 봉급표)·세금, PX, 자동차·대출, 주식 앱, 채권, 장병내일준비적금. 월급날 PX 이벤트는 뺐다
@@ -2507,7 +2508,7 @@ function pick(o){const b0={hp:S.hp,mt:S.mt,rp:S.rp},dc0=S.dc,cr0=S.cr,nco0=S.nco
 function tick(){HXS();MNY.day();if(MW.o&&MW.f){hud();return}if(!S.ev&&S.d%5==0)sv();
 const r=S.nco?S.lv:RK.filter(a=>S.d>=a[1]).length-1;
 if(!S.nco)S.ff=0;if(r>S.lv){S.lv=r;S.mt=cl(S.mt+8);say(RK[r][0]+" 진급.");CER("e",r,RK[r][0]+" 진급","계급장에 줄이 하나 늘었다")}
-if(S.d>=S.end||(S.nco&&TM()&&S.d-S.sd>=LN[S.cr]))return MNY.end(fin);
+if(S.d>=S.end||(S.nco&&TM()&&S.d-S.sd>=LN[S.cr]))return MNY.end(fin);if(EGGT0())return;
 if(S.nco&&S.cr==16){S.hp=cl(S.hp-.01);S.mt=cl(S.mt-.03);S.rp=cl(S.rp+(52-S.rp)*.0026)}else{S.hp=cl(S.hp+REGEN[0]+S.u.q*.02);S.mt=cl(S.mt+REGEN[1]+S.u.q*.02)}if(!S.dc)S.dn=S.d+90;else if(S.d>=S.dn){S.dc--;S.dn=S.d+90}if(S.f.gyon){if(S.nco)S.f.gyon=0;else S.mt=cl(S.mt-.05)}
 if(S.hp<=HOSP||S.mt<=HOSP){S.hp=Math.max(S.hp,45);S.mt=Math.max(S.mt,45);S.rp=cl(S.rp-5);S.d+=7;say(S.nco&&S.cr>=14?"과로로 쓰러져 병원에 입원했다. 일주일 동안 일정을 모두 비웠다.":"의무대 입실. 일주일 뒤 복귀.");S.hsc=(S.hsc|0)+1;UL("hosp");SFX("bad");SHAKE(3);hud();return}
 let e=EV().find(e=>!S.seen[e.id]&&((e.a==e.b&&S.d>=e.a&&(!e.if||e.if(S)))||(e.n&&e.if(S))));
@@ -2583,11 +2584,11 @@ const UL=id=>{if(S&&!S.ttl&&!S.rl&&ACH.some(a=>a[0]==id)){const q=S.ac||(S.ac=[]
 const NK=t=>{const m=t&&/별명[이은]? ‘([^’]+)’|‘([^’]+)’(?:으로|로) 불렸다|‘([^’]+)’(?:이라는|라는) 별명/.exec(t);if(!m)return;const k=m[1]||m[2]||m[3];S.nk=S.nk||[];if(!S.nk.includes(k)){S.nk.push(k);toast("별명 획득 · ‘"+k+"’")}};
 const CHK=()=>{const f=S.f,nk=S.nk||[];[["cat",f.catm],["choco",f.divfun],["bust",f.divbust],["gyo",f.gyo],["jail",f.jail],["bk",f.bkused],["stop",f.stop],["nco",S.nco],["off",S.off],["star1",S.nco&&S.cr>=10],["star4",S.nco&&S.cr>=13],["mp",S.nco&&S.cr>=14],["pres",S.nco&&S.cr==16],["cps",f.cps],["goran",nk.some(v=>v.indexOf("고라니")>=0)],["nick3",nk.length>=3],["meal",(S.fu||[]).length>=15],["mg10",(S.mgc|0)>=10],["mgk10",Object.keys(S.mgk||{}).length>=10]].forEach(a=>a[1]&&UL(a[0]))};
 const ENT=()=>ENL.length*5+6*3+3;   // 병사 엔딩 20 + 간부·정계 엔딩 18 + 쿠데타 엔딩 3
-const REC=(g,gi,title,labels,sc)=>{const f=S.f,key=g==0?S.br+":"+title:(f.cpf||f.junta||f.trd)?"x:"+title:"c"+g+":"+title,nw=!META.e[key],ob=META.b[S.br]|0,rv=S.nco?10+S.cr:S.lv;
- META.e[key]=1;META.n=(META.n|0)+1;(META.h||(META.h=[])).unshift({n:S.nm||"",b:S.br|0,r:f.trd?"이병":S.nco?LD[S.cr]:RK[S.lv|0][0],t:title,s:sc,d:S.d,y:Date.now()});if(META.h.length>20)META.h.length=20;META.br[S.br]=1;if(sc>ob)META.b[S.br]=sc;if(!META.r||rv>META.r.v)META.r={v:rv,t:S.nco?LD[S.cr]:RK[S.lv][0]};
+const REC=(g,gi,title,labels,sc)=>{const f=S.f,key=g==0?S.br+":"+title:(f.cpf||f.junta||f.trd)?"x:"+title:"c"+g+":"+title,nw=!f.egg&&!META.e[key],ob=META.b[S.br]|0,rv=S.nco?10+S.cr:S.lv;
+ if(!f.egg)META.e[key]=1;META.n=(META.n|0)+1;(META.h||(META.h=[])).unshift({n:S.nm||"",b:S.br|0,r:f.trd?"이병":S.nco?LD[S.cr]:RK[S.lv|0][0],t:title,s:sc,d:S.d,y:Date.now()});if(META.h.length>20)META.h.length=20;META.br[S.br]=1;if(sc>ob)META.b[S.br]=sc;if(!META.r||rv>META.r.v)META.r={v:rv,t:S.nco?LD[S.cr]:RK[S.lv][0]};
  if(g==0){UL("e_any");if(gi==labels.length-1)UL("e_top");if(gi==0)UL("e_bot");if(f.gfstay)UL("gf")}
  if(S.hp>=80&&S.mt>=80&&S.rp>=80)UL("full");if(f.cpf)UL("cpf");if(f.junta)UL("junta");if(f.trd)UL("trd");if([0,1,2,3].every(b=>META.br[b]))UL("e_all4");CHK();saveMeta();
- return(nw?`<p><b>새 엔딩 발견!</b> 엔딩 도감 ${Object.keys(META.e).length}/${ENT()}</p>`:"")+(sc>ob&&ob?`<p><b>${BRN[S.br]} 최고 점수 갱신!</b> (이전 ${ob}점)</p>`:"")};
+ return(f.egg?"<p><b>숨은 엔딩 발견!</b> ‘전설의 개폐급’ — 이 엔딩은 도감에도 없다.</p>":"")+(nw?`<p><b>새 엔딩 발견!</b> 엔딩 도감 ${Object.keys(META.e).length}/${ENT()}</p>`:"")+(sc>ob&&ob?`<p><b>${BRN[S.br]} 최고 점수 갱신!</b> (이전 ${ob}점)</p>`:"")};
 const SHAREBTN=(head,title,sc)=>{const k=document.createElement("button");k.textContent="결과 공유하기";k.onclick=()=>{let top=false;try{top=window.top===window.self}catch(e){}
  const u=top&&typeof location!="undefined"&&/^https?:/.test(location.href)?"\n"+location.href:"",
   t=mz(`[군생활] ${S.nm?S.nm+" · ":""}${BRN[S.br]} · ${head} · ${title} · ${sc}점`+((S.nk||[]).length?` · 별명 ${S.nk.map(v=>"‘"+v+"’").join(" ")}`:""))+u,N=typeof navigator!="undefined"?navigator:{},
@@ -3026,7 +3027,7 @@ const MRXP=["“새끼… 기합!!” 생활관 어딘가에서 선임 해병의
 const MRX=b0=>{if(!S||S.br!=1||S.nco||S.d<56)return;const d=Math.round(S.rp)-Math.round(b0.rp);if(Math.abs(d)<3||Math.random()>.3)return;const P=d>0?MRXP:MRXN,k=d>0?"p":"n";S.mrx=S.mrx||{p:[],n:[]};const ok=i=>!(S.lv>=2&&/아쎄이/.test(P[i]));let c=P.map((_,i)=>i).filter(i=>ok(i)&&!S.mrx[k].includes(i));if(!c.length){S.mrx[k]=[];c=P.map((_,i)=>i).filter(ok)}if(!c.length)return;const i=R_(c);S.mrx[k].push(i);say(P[i])};
 // ===== 엔딩 =====
 const DIFF=[17,14,18,20],CUT=[[40,55,75,82],[40,55,66,76],[40,55,72,80],[40,55,73,78]];   // 군별 점수 보정(난이도)
-const score=()=>{const{hp,mt,rp,f}=S;let v=rp*.55+mt*.25+hp*.1+Math.min(BN(f),14)+(S.nco?S.cr*1.2:0)-DIFF[S.br];if(f.junta||f.cpf)v=Math.min(v,50);if(f.trd)v=Math.min(v,35);return Math.max(0,Math.min(100,Math.round(v)))};
+const score=()=>{const{hp,mt,rp,f}=S;let v=rp*.55+mt*.25+hp*.1+Math.min(BN(f),14)+(S.nco?S.cr*1.2:0)-DIFF[S.br];if(f.junta||f.cpf)v=Math.min(v,50);if(f.trd)v=Math.min(v,35);if(f.egg)v=0;return Math.max(0,Math.min(100,Math.round(v)))};
 const ENL=[[["개폐급","폐급","일반","에이스","씹에이스"],["행보관이 서류에 도장을 찍으며 한숨을 쉬었다. 부대에서 제일 먼저 잊고 싶은 이름이 됐다.","전역 신고는 오 분 만에 끝났다. 후임들 사이에선 ‘저렇게는 되지 말자’로 통했다.","큰 사고도 큰 공도 없이 날짜를 채웠다.","대대에서 이름을 모르는 사람이 없었다. 간부들이 먼저 악수를 청했다.","부대 역사에 이름이 남았다. 위병소를 나서는데 대대장이 직접 배웅했다."]],[["폐급 해병","고문관","일반 해병","참 해병","전설의 해병"],["전역 신고 날, 위병소까지 배웅 나온 후임이 하나도 없었다. 차단기가 올라가는 순간 근무자가 작게 중얼거렸다. “새끼… 기열.”","‘저 해병은 되지 말자.’ 후임들 사이에서 반면교사로 남았다. 생활관엔 아직도 내 찐빠 이야기가 신병 교육용으로 전해진다고 한다.","큰 사고도 큰 공도 없었다. 위병소를 나서며 팔각모를 한 번 고쳐 썼다. “악! 필승!”","후임들이 위병소까지 따라 나와 목청껏 외쳤다. “악!! 필승!!” 그 소리는 버스 정류장까지 따라왔다. 그렇다. 해병은 전역해도 해병인 것이었다.","한 번 해병은 영원한 해병. 후임들은 지금도 군가 다음 순서로 그 이름을 부른다. 대대장이 직접 정문까지 배웅했다."]],
 [["폐급 수병","고문관","일반 수병","참 수병","전설의 수병"],["전역 신고 날, 부두까지 배웅 나온 후임이 하나도 없었다. 함정에서 제일 먼저 잊고 싶은 이름이 됐다.","‘저 수병은 되지 말자.’ 후임들 사이에서 반면교사로 남았다.","큰 사고도 큰 공도 없었다. 마지막 날 현문을 내려오며 함정 쪽으로 한 번 더 경례했다. 충성.","후임들이 부두까지 따라 나와 목청껏 외쳤다. “충성!” 함정 갑판에서도 누가 손을 흔들었다.","바다는 그 이름을 기억한다. 후임들은 입항할 때마다 그 이름을 부른다. 함장이 직접 부두까지 배웅했다."]],
 [["폐급 공군","고문관","일반 공군","참 공군","전설의 공군"],["전역 신고 날, 정문까지 배웅 나온 후임이 하나도 없었다. 비행단에서 제일 먼저 잊힌 이름이 됐다.","‘저 병은 되지 말자.’ 후임들 사이에서 반면교사로 남았다.","큰 사고도 큰 공도 없었다. 마지막 날 정문을 나서며 활주로 쪽을 한 번 돌아봤다. 필승.","후임들이 위병소까지 따라 나와 목청껏 외쳤다. “필승!” 이륙하는 소리보다 컸다.","그 이름은 활주로에 남았다. 후임들은 이륙 점검 때마다 그 이름을 부른다. 대대장이 직접 정문까지 배웅했다."]]];
@@ -3039,16 +3040,16 @@ const CAR={
 6:[["지지율 바닥 대통령","퇴임하고 나서 한동안 공식 석상에 나서지 않았다."],["평가가 갈리는 대통령","업적과 논란이 나란히 기록됐다. 역사는 아직 판단 중이다."],["역사에 남는 대통령","병사 출신 대통령으로 기록됐다. 군 개혁은 그의 이름으로 불린다."]]};
 const EPI=f=>[[f.gfstay,"기다려 준 사람이 정문 건너편에 서 있었다.",1],[f.gfgone,"핸드폰엔 새 메시지가 하나도 없었다.",1],[f.helper,"행군 때 군장을 나눠 들었던 동기가 제일 먼저 악수했다.",1],[f.cover,"전역하는 날, 라면 한 그릇 얻어먹은 그 선임이 위병소까지 따라 나왔다.",1],[f.rebel,"그 선임과는 전역할 때까지 말 한 번 섞지 않았다.",1],[f.report,"보고 한 번으로 얻은 것과 잃은 것을 아직 세고 있다.",1],[f.quiet,"그날 대신 쓴 이름은 아직 서류에 남아 있다.",1],[f.star,"장기자랑 영상이 아직 부대 단톡에 돌아다닌다.",1],[f.kind,"후임 한 명이 편지를 건넸다. 맞춤법이 틀렸다.",1],[f.harsh&&!f.kind,"후임들은 정문까지 따라오지 않았다.",1],[f.hero,"위험한 순간에 먼저 움직였던 일은 다음 기수 신병 교육 때도 얘기됐다."],[f.note,"생활관 관물대 안에 내 노트가 남았다.",1],[f.divfun,"지휘관 앞에서 간식을 든 채 경례한 이야기는 부대 전설이 됐다.",1],[f.divbust,"‘지휘관 앞에서 걸린 놈’이라는 별명은 전역날까지 따라다녔다.",1],[f.honest,"불리할 때도 사실대로 말했던 날들을 아직 기억한다."],[f.vol,"험지에 자원한 이름은 부대 방명록 첫 줄에 남았다.",1],[f.lastw,"마지막에 남긴 한마디는 후임들이 관물대 문 안쪽에 적어 붙였다.",1],[f.catm,"‘중령이’는 아직 PX 뒤에서 밥을 얻어먹고 있다.",1],[f.gyon,"전역하는 날까지 기수열외는 풀리지 않았다. 위병소 차단기만 내 쪽으로 올라갔다.",1],[f.gyout&&!f.gyon,"기열에서 빠져나온 이야기는 다음 기수 아쎄이들에게까지 전해졌다.",1],[f.gyo,"군기교육대에서 쓴 반성문 몇 줄은 아직도 외운다."],[f.jail,"구금된 채 센 날짜는 달력에 없는 날들이었다."],[f.bkused,"‘빽’이라는 두 글자는 전역할 때까지 이름 옆에 붙어 다녔다."],[f.nco&&!f.pro,"하사 계급장을 처음 달던 날의 각오는 아직 기억한다."],[f.pro&&!f.pmiss,"어깨 위 계급장이 한 줄 늘 때마다 명단 맨 윗줄에 내 이름이 있었다."],[f.off,"중대장의 추천서 한 장이 인생의 길을 바꿨다."],[f.offmiss&&!f.off,"장교 시험 낙방 통지서는 서랍 깊숙이 넣어 뒀다."],[S.cr>=10,"어깨에 별이 달렸다. 철모에 이름을 적던 시절이 있었다."],[S.cr==13,"별 넷. 군 역사에 이름이 올랐다."],[f.cps,"그날 새벽 거사를 막아 선 일은 교과서에 한 줄 남았다."],[f.cpf,"그날 새벽 회동에 있던 장성들의 이름도 같은 판결문에 올랐다."],[f.trd,"판결문 사본은 서랍 맨 아래 칸에 있다. 그 옆에 재심 청구서 초안이 있다."],[f.junta,"거사는 성공했다. 계엄 포고령 1호가 새벽 방송으로 나갔다."],[S.cr==16&&!f.junta,"국민이 직접 뽑은 대통령이었다. 군복은 옷장 깊숙이 걸려 있었다."],[S.cr>=14&&!f.junta,"군복을 벗고 배지를 달았다. 어깨의 별 대신 책임이 얹혔다."],[f.pmiss,"진급 명단에 내 이름은 없었다. 사유란에는 ‘근무 평정 미달’ 한 줄이 적혀 있었다."],[f.rt,"극기주에서 받은 빨간 명찰은 서랍 맨 위 칸에 있다."],[f.stop,"내가 끊은 악습은 후임들이 다음 후임에게 물려주지 않았다."],[f.chain,"후임에게 했던 군기는 내가 당한 것과 똑같이 닮아 있었다."]];
 function fin(){try{localStorage.removeItem(SK)}catch(e){}
- S.over=1;S.loc=3;const{hp,mt,rp,f}=S,sc=score(),g=stage();let labels,gi,title,body,head="전역";
+ S.over=1;S.loc=S.f&&S.f.egg?6:3;const{hp,mt,rp,f}=S,sc=score(),g=stage();let labels,gi,title,body,head="전역";
  if(g==0){const[t,d]=ENL[S.br];labels=t;gi=(c=>sc<c[0]?0:sc<c[1]?1:sc<c[2]?2:sc<c[3]?3:4)(CUT[S.br]);title=t[gi];body=d[gi]}
  else{const c=CAR[g];labels=c.map(x=>x[0]);gi=sc<45?0:sc<70?1:2;[title,body]=c[gi];
   head=f.trd?"반역죄: 이병":(f.cpf?"반란 수괴: ":f.junta?"군사정권 수반: ":g>=5?"정계: ":g>=2?"예편: ":"복무 종료: ")+LD[S.cr];
   if(f.cpf){title="반란 수괴";body="새벽의 거사는 사흘을 넘기지 못했다. 군사법정에서 계급장이 떼어졌다.";labels=[title];gi=0}
   else if(f.junta){title="군사정권 수반";body="권력은 잡았다. 역사의 판결은 아직 끝나지 않았다.";labels=[title];gi=0}
   else if(f.trd){title="반역죄 · 이등병 강등";body="별 넷이 작대기 하나가 됐다. 반란군이 세운 법정은 진압군 지휘관에게 반역죄를 씌웠다. 이병 계급장을 달고 위병소를 나서는 날, 위병은 경례 대신 차단기만 올렸다.";labels=[title];gi=0}}
- const epi=EPI(f).filter(a=>a[0]&&!(g>=1&&a[2])).map(a=>`<p>${a[1]}</p>`).join(""),rec=REC(g,gi,title,labels,sc),nk=S.nk||[],
+ if(f.egg){labels=["전설의 개폐급"].concat(labels||[]);gi=0;title="전설의 개폐급";body=EGGB(S);head="무기징역 · 강제 전역"}const epi=EPI(f).filter(a=>a[0]&&!(g>=1&&a[2])).map(a=>`<p>${a[1]}</p>`).join(""),rec=REC(g,gi,title,labels,sc),nk=S.nk||[],
   y0=S.y0||new Date().getFullYear(),fd=t=>t.getFullYear()+"."+String(t.getMonth()+1).padStart(2,"0")+"."+String(t.getDate()).padStart(2,"0"),
-  doc=f.cpf||f.trd?"판결문":f.junta?"포고문":g==6?"임기 기록":g==5?"의정 기록":"전역증",rank=f.trd?"이병":S.nco?LD[S.cr]:RK[S.lv][0],seal=S.br==0?"충성":"필승";
+  doc=f.cpf||f.trd||f.egg?"판결문":f.junta?"포고문":g==6?"임기 기록":g==5?"의정 기록":"전역증",rank=f.trd?"이병":S.nco?LD[S.cr]:RK[S.lv][0],seal=S.br==0?"충성":"필승";
  $("dc").innerHTML=mz(`<div class="cert"><p class="ct">${doc}</p><p class="cs">${head}</p><dl><dt>성명</dt><dd>${S.nm||"○○○"}</dd><dt>군별</dt><dd>${BRN[S.br]}</dd><dt>최종 계급</dt><dd>${rank}</dd>${CRTU()}<dt>복무 기간</dt><dd>${fd(new Date(y0,2,1))} ~ ${fd(new Date(y0,2,1+S.d))} · ${S.d}일</dd><dt>별명</dt><dd>${nk.length?nk.map(v=>"‘"+v+"’").join(" "):"없음"}</dd>${MNY.cert()}</dl><div class="vd"><p class="gr${title.length>7?" lg":""}">${title}</p><span class="seal">${seal}</span></div><p class="tr">${labels.map((t,i)=>`<span class="${i==gi?"on":""}">${t}</span>`).join("")}</p><p class="bd">${body}</p><div class="ep">${epi}</div><p class="sc"><span>점수 <b>${sc}</b></span><span>체력 ${Math.round(hp)}</span><span>멘탈 ${Math.round(mt)}</span><span>평판 ${Math.round(rp)}</span></p></div>${rec}`);
  SHAREBTN(head,title,sc);const b=document.createElement("button");b.textContent="처음부터";b.className="pri";b.onclick=()=>{SFX("tap");init()};$("dc").appendChild(b);BC();hud();SFX(sc>=55?"win":"end");FLASH("#fff",.35);$("dc").scrollIntoView({block:"nearest"})}
 // ===== 연출: 효과음 · 화면 효과 · 진급식 · 날씨 · 타이틀 =====
@@ -3193,7 +3194,7 @@ function init(){MW.o&&MNY.close(1);
 function spin(){const w=S.rl,r=Math.random()*4|0,TAU=Math.PI*2,from=w.ang%TAU,goal=1.5*Math.PI-(r+.5)*Math.PI/2+(Math.random()-.5)*.8;
  w.res=r;w.from=from;w.to=from+TAU*5+(((goal-from)%TAU)+TAU)%TAU;w.t0=performance.now();w.st=1;$("dc").innerHTML=""}
 function rouletteDone(){const r=S.rl.res;say(BRN[r]+"! "+BNOTE[r]);const b=document.createElement("button");b.textContent="입대한다";b.className="pri";b.onclick=()=>{SFX("tap");begin(r)};$("dc").appendChild(b)}
-function begin(r){S.rl=0;S.ttl=0;S.br=r;MNY.fresh();S.mr=r==1;S.end=BEND[r];S.u={n:BCAMP[r],q:0,i:3};if(!S.nm)S.nm=RNDNM();BC();S.loc=1;$("dc").innerHTML="";hud();show(EV()[0])}
+function begin(r){S.rl=0;S.ttl=0;S.br=r;MNY.fresh();S.mr=r==1;S.end=BEND[r];S.u={n:BCAMP[r],q:0,i:3};if(!S.nm)S.nm=RNDNM();EGGCS();BC();S.loc=1;$("dc").innerHTML="";hud();show(EV()[0])}
 // 계급 단계: 0병사 1부사관 2위관 3영관 4장성 5의원 6대통령
 const stage=()=>!S.nco?0:S.cr<4?1:S.cr<7?2:S.cr<10?3:S.cr<14?4:S.cr<16?5:6;
 
@@ -3811,7 +3812,7 @@ return{
  // 부사관 임관: 병 적금 정리 창
  nco:()=>{const v=MS().sv;if(v.st==1){if(v.p>0)OPEN("sav",{f:1});else v.st=2}},
  // 복무가 끝나는 날: 병이면 적금 정리 창을 먼저 띄우고 끝나면 엔딩
- end:cb=>{if(MW.o)CLOSE(1);const v=MS().sv;if(!S.nco&&v.st==1&&v.p>0)return OPEN("sav",{f:1,cb});return cb()},
+ end:cb=>{if(MW.o)CLOSE(1);const v=MS().sv;if(!S.nco&&v.st==1&&v.p>0&&!S.f.egg)return OPEN("sav",{f:1,cb});return cb()},
  cert:()=>S.m?`<dt>최종 자산</dt><dd>${W(NW())}</dd>`:"",
  rec:()=>S.m?[["지갑",W(S.m.c)],["순자산",W(NW())]]:[]};
 })();
@@ -4297,7 +4298,8 @@ const SKN="#e3b48c",SKD="#c99670",
 const NKW=[["사단장",11],["여단장",10],["비행단장",10],["연대장",9],["전대장",9],["함장",8],["대대장",8],["중대장",6],["소대장",4],["당직사관",5],["주임원사",3],["행보관",2],["당직 부사관",1],["당직부사관",1],
   ["조교","e3"],["병장","e3"],["상병","e2"],["일병","e1"],["이병","e0"],["맞선임","s1"],["선임","s1"],["후임","s-1"],["동기","s0"]],
  CMDW=["사단장","여단장","비행단장","연대장","전대장","대대장","중대장"],NTX=new WeakMap(),
- NPCR=e=>{const camp=CAMP(S);if(!e)return[camp?"t":"e2",0];let t=NTX.get(e);if(t===undefined){t=typeof e.t=="string"?e.t:typeof e.t=="function"?String(e.t):"";NTX.set(e,t)}
+ NPCR=e=>{const camp=CAMP(S);if(!e)return[camp?"t":"e2",0];if(e.nr)return e.nr(S);   // 사건이 인물 계급을 직접 정한 경우
+ let t=NTX.get(e);if(t===undefined){t=typeof e.t=="string"?e.t:typeof e.t=="function"?String(e.t):"";NTX.set(e,t)}
   if(e.id=="dn")t=camp?"당직사관":"대대장";
   let bi=1e9,r=null,w="";for(const[kw,v]of NKW){const i=t.indexOf(kw);if(i>=0&&i<bi){bi=i;r=v;w=kw}}
   if(r===null)r=camp?"t":"e2";
@@ -4373,6 +4375,55 @@ drawScene=function(n){MTRC();const l=sceneLoc(),td=TOD(),sn=wn(S.d)?1:0,br=S.br|
 
 window.GFXHD=GFXHD;window.GFXCD=GFXCD;
 })();
+// ===== v30 이스터에그: 이름이 ‘김정빈’이면 일병 계급장을 다는 날 전설이 시작된다 =====
+// 일병 진급 직후 병크 사건(장비 폭발 / 오발이 참모총장에게 / 총검술 대검이 동기 김동유 배에 튕겨 사단장에게)
+// → 군사법원 무기징역 → 국군교도소(옛 육군교도소) · 강제 전역 → 판결문 ‘전설의 개폐급’
+// 이름을 알아야만 볼 수 있는 숨은 엔딩이라 엔딩 도감 수에는 넣지 않는다
+const EGGN="김정빈",
+ EGGON=s=>!!s&&String(s.nm||"").normalize("NFC").replace(/\s/g,"")===EGGN,
+ // 군별: 군 최고 지휘관(해병대는 참모총장이 아니라 사령관), 사단장급 지휘관, 날려 먹는 장비
+ EGGD=[{ch:"육군참모총장",cs:"참모총장",chr:13,st:"별 넷",dv:"사단장",dvr:11,vh:"K21 장갑차",vn:"장갑차 킬러",mc:"정비관"},
+  {ch:"해병대사령관",cs:"사령관",chr:12,st:"별 셋",dv:"사단장",dvr:11,vh:"상륙돌격장갑차",vn:"장갑차 킬러",mc:"정비관"},
+  {ch:"해군참모총장",cs:"참모총장",chr:13,st:"별 넷",dv:"함대사령관",dvr:11,vh:"고속정",vn:"고속정 킬러",mc:"기관장"},
+  {ch:"공군참모총장",cs:"참모총장",chr:13,st:"별 넷",dv:"비행단장",dvr:10,vh:"F-15K",vn:"F-15K 킬러",mc:"정비대장"}],
+ EGGQ=s=>EGGD[s.br|0]||EGGD[0],
+ EGGV=s=>{if(s.f.eggv==null)s.f.eggv=Math.random()*3|0;return s.f.eggv},   // 세 사건 가운데 하나(한 판 안에서는 고정)
+ EGGT=[s=>{const q=EGGQ(s),b=s.br|0;
+   if(b==2)return"[14:20] 일병 계급장을 단 지 세 시간. 부두에 묶인 고속정 기관실 청소 당번이다. 벽에 빨간 레버가 있고, 옆에 ‘절대 당기지 마시오’라고 적혀 있다. 왜 당기면 안 되는지 너무 궁금했다. 레버를 당기고 삼 초 뒤, 고속정 뒤쪽 절반이 부두 너머로 날아간다. 다친 사람은 없었다. 고속정 절반만 없어졌다.";
+   if(b==3)return"[14:20] 일병 계급장을 단 지 세 시간. 격납고 청소 중인데 F-15K 조종석 덮개가 열려 있다. 좌석 사이에 노랗고 검은 줄무늬 손잡이가 보인다. 딱 한 번만 당겨 보고 싶었다. 당기는 순간 사출좌석이 불을 뿜으며 격납고 지붕을 뚫고 솟구친다. 다친 사람은 없었다. 격납고 지붕과 F-15K 한 대만 없어졌다.";
+   return`[14:20] 일병 계급장을 단 지 세 시간. 정비고에서 ${b==1?"선임 해병이":"선임이"} ${q.vh}에 기름을 채워 두라고 한다. 주유기가 두 대다. 한 대엔 ‘경유’, 다른 한 대엔 빨간 글씨로 ‘절대 사용 금지’. 빨간 쪽이 더 멋있어 보였다. 노즐을 꽂고 삼 초 뒤, 정비고 지붕이 ${b==1?"갯벌":"연병장"} 한가운데로 날아가 떨어진다. 다친 사람은 없었다. 장갑차만 없어졌다.`},
+  s=>{const q=EGGQ(s);return`[10:30] 일병 진급 기념 사격. 하필 오늘 ${q.ch}${JO(q.ch,"이")} 사격장을 시찰하러 왔다. 사로 뒤로 ${q.st}${JO(q.st,"이")} 지나가자 반사적으로 경례하려고 몸을 돌렸다. 손가락은 아직 방아쇠에 걸려 있었다. ‘탕!’ 한 발이 정확히 ${q.ch}의 바지 지퍼 한가운데를 지나간다. 달려온 군의관이 한참을 살피더니 조용히 고개를 젓는다. “…고자가 되셨습니다.”`},
+  s=>{const q=EGGQ(s);return`[15:10] 총검술 교장. ${q.dv}${JO(q.dv,"이")} 훈련을 보러 왔다. 잘 보이고 싶어서 ‘찔러 총!’ 구령에 온 힘을 다해 내질렀다. 그 순간 대검이 총에서 쑥 빠진다. 날아간 대검은 옆에 선 동기 김동유의 배에 ‘퉁!’ 하고 맞고 튕겨 나간다. 그리고 빙글빙글 돌며 칼자루부터 정확히 ${q.dv}의 급소를 강타한다. 김동유는 멀쩡했다. ${q.dv}${JO(q.dv,"은")} 아니었다. 군의관이 짧게 말한다. “…고자가 되셨습니다.”`}],
+ // 판결문·전역증에 들어갈 죄목
+ EGGW=s=>{const q=EGGQ(s),v=EGGV(s),b=s.br|0;
+  return v==0?(b==2?"고속정 절반을 부두 너머로 날려 보냈다":b==3?"F-15K 한 대와 격납고 지붕을 날려 먹었다":`${q.vh} 한 대와 정비고 지붕을 날려 먹었다`)
+   :v==1?`${q.ch}의 대를 총알 한 발로 끊었다`:`대검 한 자루로 동기 김동유의 배를 거쳐 ${q.dv}의 대를 끊었다`},
+ EGGC1=s=>{const q=EGGQ(s),v=EGGV(s),nx=[1,"egg2"],D3=s=>{s.d+=3;return 0};   // 재판은 사흘 뒤
+  return[["“…제가 그랬습니다.” 손을 든다",0,-15,-20,"","양손을 들고 앞으로 나섰다. 오 분 만에 군사경찰 차량이 도착했다. 뒷좌석에 오르는데 누군가 박수를 쳤다. 김동유였다.",nx,0,D3],
+   v==0?["“원래 그렇게 되는 건 줄 알았습니다!”",0,-10,-25,"",`아무도 대답하지 않았다. ${q.mc}${JO(q.mc,"이")} 그 자리에 주저앉아 장비 대장에서 ${q.vh} 한 줄을 지웠다. 그날부터 별명은 ‘${q.vn}’${JO(q.vn,"이었다")}.`,nx,0,D3]
+   :v==1?["총을 내려놓고 늦은 경례를 올린다",0,-10,-25,"",`총을 내려놓고 경례를 올렸다. ${q.ch}${JO(q.ch,"은")} 경례를 받지 않았다. 대신 한 옥타브 높아진 목소리로 군사경찰을 불렀다. 그날부터 별명은 ‘${q.cs} 저격수’였다.`,nx,0,D3]
+   :["“김동유가 배를 내밀었습니다!”",0,-10,-25,"","김동유가 억울하다는 듯 배를 내밀어 보였다. 대검 자국 하나 없이 멀쩡했다. 아무도 웃지 않았다. 김동유만 웃었다. 그날부터 별명은 ‘고자 제조기’였다.",nx,0,D3],
+   ["위병소 쪽으로 냅다 뛴다",-10,-10,-30,"","칠백 미터를 전력으로 달렸다. 위병소 차단기는 내가 도착하기 딱 일 초 전에 내려왔다. 차단기 앞에는 김동유가 먼저 와 있었다.",nx,0,D3]]},
+ EGGEP="호송차는 그날 오후 이천 국군교도소(옛 육군교도소) 정문을 통과했다. 일병 계급장은 수용 번호표로 바뀌었다. 같은 날 부대에는 ‘강제 전역’ 공문 한 장이 내려왔다.",
+ EGGX=s=>{s.end=s.d;return 0},   // 다음 날 바로 판결문(결과판)으로
+ EGG1={id:"egg1",a:9e3,b:9e3,l:1,v:1,t:s=>EGGT[EGGV(s)](s),c:EGGC1,
+  nr:s=>{const q=EGGQ(s),v=EGGV(s);return[v==0?"e3":v==1?q.chr:q.dvr,0]}},   // 옆에 그려지는 사람: 선임 / 참모총장 / 사단장
+ EGG2={id:"egg2",a:9e3,b:9e3,l:6,
+  t:s=>`[10:00] 군사법원 법정. 재판장이 판결문을 읽어 내려간다. “피고인 일병 ○○○. 일병 계급장을 단 바로 그날 ${EGGW(s)}. 국군 창설 이래 이런 일병은 없었고, 앞으로도 없어야 한다.” 방청석 맨 앞줄의 김동유가 천천히 고개를 젓는다. 재판장이 마지막 줄을 읽는다. “…피고인을 무기징역에 처한다.”`,
+  c:[["“억울합니다! 김동유도 같이 넣어 주십시오!”",0,-20,-20,"egg","재판장은 김동유를 한 번, 나를 한 번 보았다. 판결은 바뀌지 않았다. "+EGGEP,0,0,EGGX],
+   ["고개를 숙이고 판결을 받아들인다",0,-10,-10,"egg","재판장이 판결문을 덮었다. "+EGGEP,0,0,EGGX],
+   ["“다음 생엔 에이스가 되겠습니다!”",0,-5,-15,"egg","방청석에서 누가 피식 웃었다. 김동유였다. "+EGGEP,0,0,EGGX]]},
+ // 하루가 지날 때마다 확인: 일병이 되는 순간 사건, 저장 뒤 다시 열어도 법정까지 이어진다
+ EGGT0=()=>{if(!EGGON(S)||S.nco||(S.lv|0)<1||S.f.egg||S.ev||S.mg||S.over)return false;
+  const v=EGGV(S),e=S.seen.egg1?EGG2:EGG1;show(e);
+  if(e===EGG1){if(v==0){SHAKE(9);FLASH("#ffb347",.85);SFX("boom");BUZZ(200)}else if(v==1){SHAKE(4);SFX("shot")}else{SHAKE(5);SFX("bad")}}
+  return true},
+ // 이 판의 동기 이름은 무조건 김동유
+ EGGCS=()=>{if(!EGGON(S))return;S.cs=S.cs||MKC();S.cs.D1="김동유";S.cs.D1n="동유"},
+ EGGB=s=>`국군 창설 이래 일병 계급장을 가장 짧게 단 사람. ${EGGW(s)}. 이천 국군교도소 수용 기록부 맨 윗줄에 이름이 올랐고, 정신교육 교재 ‘이러면 안 된다’ 편의 주인공이 됐다. 행보관은 지금도 그 이름만 들으면 말없이 창밖을 본다.`;
+POOLS.forEach(p=>p.push(EGG1,EGG2));   // 맨 뒤에 둔다(입대 첫 사건은 목록 맨 앞에서 꺼낸다)
+SFXT.boom=()=>{NOISE(0,1.1,.75,900);NOISE(.06,.6,.5,260);TONE(70,0,.9,"sawtooth",.09,28)};
+
 init();requestAnimationFrame(loop);
 </script>
 </body>
